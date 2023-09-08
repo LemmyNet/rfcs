@@ -12,7 +12,6 @@ bit of a design process and produce a consensus among the Lemmy community.
 
 ## Table of Contents
 
-  - [Table of Contents]
   - [When you need to follow this process]
   - [Before creating an RFC]
   - [What the process is]
@@ -22,10 +21,10 @@ bit of a design process and produce a consensus among the Lemmy community.
   - [RFC Postponement]
   - [Help this is all too informal!]
   - [License]
-  - [Contributions]
 
 
 ## When you need to follow this process
+[When you need to follow this process]: #when-you-need-to-follow-this-process
 
 You need to follow this process if you intend to make "substantial" changes to
 the Lemmy backend, or the RFC process itself. What constitutes a
