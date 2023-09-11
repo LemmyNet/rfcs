@@ -1,7 +1,7 @@
 - Feature Name: (fill me in with a unique ident, `my_awesome_feature`)
 - Start Date: (fill me in with today's date, YYYY-MM-DD)
-- RFC PR: [LemmyNet/rfcs#0000](https://github.com/rust-lang/rfcs/pull/0000)
-- Rust Issue: [LemmyNet/lemmy#0000](https://github.com/rust-lang/rust/issues/0000)
+- RFC PR: [LemmyNet/rfcs#0000](https://github.com/LemmyNet/rfcs/pull/0000)
+- Lemmy Issue: [LemmyNet/lemmy#0000](https://github.com/LemmyNet/lemmy/issues/0000)
 
 # Summary
 
