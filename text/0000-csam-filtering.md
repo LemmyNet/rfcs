@@ -36,7 +36,7 @@ More about it here https://github.com/iftas-org/resources/blob/main/CSAM-CSE/REA
     * For Every upload or image creation ( from local or federated ) it has to go through activated checks before it finally lands in the storage. 
         + The checks has to be done before showing that post/comment/dm.
 
-    * If the checks failed because it returned it IS csam, it should get punished with the activated options in the admin panel.
+    * If the checks failed because it returned positive for CSAM, the user and his post/comment/dm with the options enabled in the admin panel.
 
     * If the checks failed because an error
 
