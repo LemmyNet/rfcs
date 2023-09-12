@@ -14,12 +14,6 @@ it has mental stress for everyone involved too, many admins, many mods just stra
 More about it here https://github.com/iftas-org/resources/blob/main/CSAM-CSE/README.md
 # Guide-level explanation
 
-Explain the proposal as if it was already included in Lemmy and you were teaching it to another user. That generally means:
-
-- Explaining the feature largely in terms of examples.
-- Explaining how Lemmy users should *think* about the feature, and how it should impact the way they use Lemmy. It should explain the impact as concretely as possible.
-- For policy RFCs, this section should provide an example-driven introduction to the policy, and explain its impact in concrete terms.
-
 - As an admin you can add your credentials of different CSAM filtering Services ( For Example [Microsofts PhotoDNA](https://www.microsoft.com/en-us/photodna)) in the Admin Settings and/or activate a offline CSAM scanner ( For example [AI Horde csam scanner](https://github.com/Haidra-Org/horde-safety/blob/main/horde_safety/csam_checker.py), [Thorn Safer [paid]](https://get.safer.io/csam-detection-tool-for-child-safety), [Meta PQD](https://github.com/facebook/ThreatExchange/tree/main/pdq)). ( Only either one CSAM filtering Service or offline csam scanner is required )
 - As an example you can use 
 - You can change what it should do below the credentials:
@@ -37,8 +31,6 @@ Explain the proposal as if it was already included in Lemmy and you were teachin
 
 # Reference-level explanation
 
-This is the technical portion of the RFC. Explain the design in sufficient detail that:
-
 - The picture upload process has to change if this feature is active:
     * For Every upload or image creation ( from local or federated ) it has to go through activated checks before it finally lands in the storage. 
         + The checks has to be done before showing that post/comment/dm.
@@ -48,10 +40,6 @@ This is the technical portion of the RFC. Explain the design in sufficient detai
     * If the checks failed because an error
 
     * The checks should be scalable that it isnt lagging a large instance behind of images. (Some of the services have "Bulk" image uploads, those should be used if there is such option.)
-
-The section should return to the examples given in the previous section, and explain more fully how the detailed proposal makes those examples work.
-
-In particular explain the following, if applicable:
 
 - Database Changes:
     + Create a table "csam-detection-status with the columns
@@ -81,9 +69,6 @@ None found please let us know if there are any.
     + No, as this should be a core feature of the backend.
 
 # Prior art
-
-Discuss prior art, both the good and the bad, in relation to this proposal.
-A few examples of what this can include are:
 
 - Does this feature exist in other social media platforms and what experience have their community had?
     + Every other social media platform has this feature ( or even his own [see Meta PQD]) because of the liability it reduces it has only positive effects.
