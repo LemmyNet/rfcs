@@ -73,7 +73,7 @@ None found please let us know if there are any.
 # Prior art
 
 - Does this feature exist in other social media platforms and what experience have their community had?
-    + Every other social media platform has this feature ( or even his own [see Meta PQD]) because of the liability it reduces it has only positive effects.
+    + Every other social media platform has this feature ( and even made his own [see Meta PQD]), because it reduces: Stress, Liability Risk of Admins.
 - Papers: Are there any published papers or great posts that discuss this? If you have some relevant papers to refer to, this can serve as a more detailed theoretical background.
     + https://github.com/iftas-org/resources/blob/main/CSAM-CSE/README.md#detection
     + https://decoded.legal/blog/2022/11/notes-on-operating-fediverse-services-mastodon-pleroma-etc-from-an-english-law-point-of-view
