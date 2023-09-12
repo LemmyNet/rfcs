@@ -59,7 +59,10 @@ More about it here https://github.com/iftas-org/resources/blob/main/CSAM-CSE/REA
 
 # Drawbacks
 
-None found please let us know if there are any.
++ False Positives (mostly only on Local Filtering as some of them are AI / ML based, but there is the possibility of Hash Collision on the external Services with Image Hash detection )
++ For external Services there is a reliance on external closed source filtering.
++ Adding more complexity on Image Uploads ( and with it a delay )
+
 
 # Rationale and alternatives
 
