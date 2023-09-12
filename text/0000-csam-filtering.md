@@ -1,7 +1,7 @@
 - Feature Name: csam_filtering
 - Start Date: 2023-09-12
-- RFC PR: [LemmyNet/rfcs#0000](https://github.com/LemmyNet/rfcs/pull/0000)
-- Lemmy Issue: [LemmyNet/lemmy#0000](https://github.com/LemmyNet/lemmy/issues/0000)
+- RFC PR: (coming soon)[LemmyNet/rfcs#0000](https://github.com/LemmyNet/rfcs/pull/0000)
+
 
 # Summary
 
