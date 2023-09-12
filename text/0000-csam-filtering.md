@@ -25,6 +25,7 @@ More about it here https://github.com/iftas-org/resources/blob/main/CSAM-CSE/REA
       * [ ] Remove Data from the inflicting User
     + [ ] Purge the inflicting user.
     + [ ] Notify Admins over dms [ Local and if possible non Local admins ]
+    + [ ] Pass on Error ( If the checks somehow errored out after few retries, should it still get through? )
 
 - You can activate it then with a checkbox on top and it will scan all new images and log its actions ( Thumbnails, Embeds, Images in Posts, Images in Comments, Images in private messages )
 
@@ -38,7 +39,7 @@ More about it here https://github.com/iftas-org/resources/blob/main/CSAM-CSE/REA
 
     * If the checks failed because it returned positive for CSAM, the user and his post/comment/dm with the options enabled in the admin panel.
 
-    * If the checks failed because an error
+    * If the checks failed because an error it should either let it through or block it.
 
     * The checks should be scalable that it isnt lagging a large instance behind of images. Best case it should cache hashes of allready known bad images of previous checks. (Some of the services have "Bulk" image uploads, those should be used if there is such option.)
 
