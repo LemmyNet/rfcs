@@ -12,6 +12,7 @@ This feature wants to implement a way to combat CSAM / unwanted images.
 This feature wants to reduce the liability risk of the instance admins, that have to fight against CSAM in many kind and forms,  
 it has mental stress for everyone involved too, many admins, many mods just straight up left the platform because of the stress induced by such pictures. 
 More about it here https://github.com/iftas-org/resources/blob/main/CSAM-CSE/README.md
+
 # Guide-level explanation
 
 - As an admin you can add your credentials of different CSAM filtering Services ( For Example [Microsofts PhotoDNA](https://www.microsoft.com/en-us/photodna)) in the Admin Settings and/or activate a offline CSAM scanner ( For example [AI Horde csam scanner](https://github.com/Haidra-Org/horde-safety/blob/main/horde_safety/csam_checker.py), [Thorn Safer [paid]](https://get.safer.io/csam-detection-tool-for-child-safety), [Meta PQD](https://github.com/facebook/ThreatExchange/tree/main/pdq)). ( Only either one CSAM filtering Service or offline csam scanner is required )
@@ -19,7 +20,7 @@ More about it here https://github.com/iftas-org/resources/blob/main/CSAM-CSE/REA
 - You can change what it should do below the credentials:
     + [X] Remove Image in the storage
     + [X] Dont federate Posts/Comments/DMs before the CSAM check is done
-    + [X] Lazy Checking ( This will activate lazy checking the image => Instead of blocking the upload, it "allows" the image through but it will purge it afterwards if it hit a check )
+    + [X] Lazy Checking ( This will activate lazy checking the image => Instead of blocking the upload, it "allows" the image through but it will purge the comment/post/dm and purges the image from storage it afterwards if it hit a check )
     + [ ] Ban the inflicting user.
       * [ ] Remove Data from the inflicting User
     + [ ] Purge the inflicting user.
@@ -39,7 +40,7 @@ More about it here https://github.com/iftas-org/resources/blob/main/CSAM-CSE/REA
 
     * If the checks failed because an error
 
-    * The checks should be scalable that it isnt lagging a large instance behind of images. (Some of the services have "Bulk" image uploads, those should be used if there is such option.)
+    * The checks should be scalable that it isnt lagging a large instance behind of images. Best case it should cache hashes of allready known bad images of previous checks. (Some of the services have "Bulk" image uploads, those should be used if there is such option.)
 
 - Database Changes:
     + Create a table "csam-detection-status with the columns
