@@ -47,7 +47,7 @@ More about it here https://github.com/iftas-org/resources/blob/main/CSAM-CSE/REA
     + Create a table "csam-detection-status with the columns
         - Id (Primary Key)
         - UserID ( string reference to the users table )
-        - Status ( string | either one of "running" | "done" )
+        - Status ( string | either one of "running" | "done" | "failed" )
         - CSAM ( optional boolean - only when the status is "done")
         - entityId ( optional number | referencing to posts/comments/dms - only used when lazy loading is active )
         - entityType ( option string | either one of "post" | "comment" | "dm" - only used when lazy loading is active )
