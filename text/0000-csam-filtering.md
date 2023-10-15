@@ -42,7 +42,7 @@ The checks have to be done before showing that post/comment/dm.
   - The checks should be scalable so that it isn't lagging a large instance behind images. Best case it should cache hashes of already known bad images of previous checks. (Some of the services have "Bulk" image uploads, those should be used if there is such an option.)
 
 - Database Changes:
-  - Create a table "csam-detection-status with the columns
+  - Create a table "CSAM-detection-status with the columns
     - Id (Primary Key)
     - UserID ( string reference to the users' table )
     - Status ( string | either one of "running" | "done" | "failed" )
@@ -52,7 +52,7 @@ The checks have to be done before showing that post/comment/dm.
 
 - API Changes:
   - New API for the settings
-  - New API for the logs for the admins ( the logs can be defered from the "csam-detection-status" table )
+  - New API for the logs for the admins ( the logs can be deferred from the "CSAM-detection-status" table )
 
 - Federation Changes:
   - This feature would be ONLY local. ( It will still check federated posts )
@@ -65,6 +65,10 @@ For external Services, there is a reliance on external closed source filtering.
 
 # Rationale and alternatives
 
+- Why is this design the best in the space of possible designs?
+  - Due to there being no other official implementations
+- What other designs have been considered and what is the rationale for not choosing them?
+  - There are no other integrated designs. Alternative solutions require tying into Pictrs, rather than processing in the Lemmy backend itself as a separate worker process.
 - What is the impact of not doing this?
   - Legal liability of admins ( and in some way the developers of Lemmy )
   - Trauma of the users, mods, and admins.
@@ -84,10 +88,13 @@ For external Services, there is a reliance on external closed source filtering.
   - <https://en.wikipedia.org/wiki/Legality_of_child_pornography>
 
 # Unresolved questions
-<!-- TODO finish section -->
+
 - What parts of the design do you expect to resolve through the RFC process before this gets merged?
+  - To work out any technical or UI design details
 - What parts of the design do you expect to resolve through the implementation of this feature before stabilization?
+  - To review different external scanning tooling that could be injected into the upload pipeline.
 - What related issues do you consider out of scope for this RFC that could be addressed in the future independently of the solution that comes out of this RFC?
+  - To look into additional ML related (or non-hash) detection methods
 
 # Future possibilities
 
