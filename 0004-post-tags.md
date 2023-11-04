@@ -1,6 +1,6 @@
 - Feature Name: Post Tags
 - Start Date: 2023-11-04
-- RFC PR: [LemmyNet/rfcs#0000](https://github.com/LemmyNet/rfcs/pull/0000)
+- RFC PR: [LemmyNet/rfcs#0004](https://github.com/LemmyNet/rfcs/pull/4)
 - Lemmy Issue: [LemmyNet/lemmy#317](https://github.com/LemmyNet/lemmy/issues/317)
 
 # Summary
