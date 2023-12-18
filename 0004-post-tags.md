@@ -15,7 +15,7 @@ Post Tags would allow for vastly improved content filtering (and to a lesser ext
 
 Tags grant you more fine grained control over the content you see on Lemmy. Certain users do not want to see certain content and tags allow you to do exactly that.
 
-For example a lot of communities offer mixed content such as Memes, News and Discussions. Some people would like to only see News or Discussions. In such a case they could blacklist (filter out) the "Meme" tag, going forward they would not be presented with any Memes in that community.
+For example a lot of communities offer mixed content such as Memes, News and Discussions. Some people would like to only see News or Discussions. In such a case they could blocklist (filter out) the "Meme" tag, going forward they would not be presented with any Memes in that community.
 
 Another use for tags is better handling of how posts are displayed. For example some people would like the content of a post to stay hidden for all users. This could be the case in a community focused on release discussions of Books, Movies, TV Shows or communities with content some users might find offensive but which is not neccesarily NSFW (for example jokes about certain topics).
 
@@ -276,7 +276,7 @@ Pros:
 Cons:
 - greater moderation demand since tags have to be checked for inappropriate content
 - very high chance for content fragmentation (typos, differences in naming things, language barriers)
-- almost completely removes the ability of users to blacklist content tags (pronography would slip past a "pornography" blacklist).
+- almost completely removes the ability of users to blocklist content tags (pronography would slip past a "pornography" blocklist).
 
 # Unresolved questions
 
