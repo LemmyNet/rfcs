@@ -28,10 +28,7 @@ Essentially the tags serve as an easier way to message what is *inside* the post
 ### Protocol:
 According to https://www.w3.org/TR/activitystreams-vocabulary/#dfn-tags a general tag object exists in the ActivityPub protocol. 
 Entirely unmoderated tags are not an option for lemmy as the moderation workload would be too much. Additionally users being able to type out tags themselves introduces splintering in the tag contents due to typos. A better solution is a curated list of tags users can attach to their posts. The list of tags can be maintained by both admins and moderators allowing for each community to tailor tags to their specific needs.
-Content for both sets of tags would be located in their respective root:
-
-- Instance Tags: `https://example.org/t/tag`
-- Community Tags: `https://example.org/c/instance/t/tag`
+Content for tags would be located in the respective root: `https://example.org/c/example/t/tag`
 
 The tag URL could then be utilized as a unique identifier for the tag, however doing so would restrict the ability to move the underlying tag url in the future. Instead an additional `id` field should be used. Using the object ID optional tag federation can also be achieved, allowing for communities across multiple instances to share content via tags (example: News tag shared across instances). This would also solve the issue of splintered communities across instances while not forcing it on the communities in question. For now tags will only be applicable to posts, however the general design allows for them to be attached to any kind of object later on, be that instance, community or user. The limited initial scope allows for easier modifications should any rough edges or missing features be discovered.
 
@@ -50,7 +47,7 @@ Example Tag Objects:
 ```json
 {
     "id": 1,
-    "url": "https://example.org/t/tag",
+    "url": "https://example.org/c/community/t/tag",
     "name": "Generic Tag"
 }
 ```
@@ -60,7 +57,7 @@ Example Tag Objects:
 {
     "type": "nsfw",
     "id": 1,
-    "url": "https://example.org/t/tag",
+    "url": "https://example.org/c/adult_community/t/nsfw",
     "name": "NSFW"
 }
 ```
@@ -70,7 +67,7 @@ Example Tag Objects:
 {
     "type": "cw",
     "id": 1,
-    "url": "https://example.org/t/tag",
+    "url": "https://example.org/c/story_community/t/spoiler",
     "name": "Spoiler"
 }
 ```
@@ -80,7 +77,7 @@ Example Tag Objects:
 {
     "type": "cw",
     "id": 1,
-    "url": "https://example.org/t/tag@example_remote.org",
+    "url": "https://example.org/c/example_community/tag@example_remote.org",
     "name": "Spoiler"
 }
 ```
@@ -102,12 +99,12 @@ Example Post json:
     {
       "type": "cw",
       "id": 2,
-      "url": "https://example.org/t/blood",
+      "url": "https://example.org/c/viral_clips/t/blood",
       "name": "Blood/Gore"
     },
     {
       "id": 3,
-      "url": "https://example.org/t/news@example_remote.org",
+      "url": "https://example.org/c/tv_shows/t/news@example_remote.org",
       "name": "News"
     }
   ]
@@ -117,9 +114,9 @@ Example Post json:
 ### Backend:
 I am not quite familiar with the Lemmy Backend so any corrections or additions for this section are appreciated.
 
-Two new tables for "tags" would be required. One for instance wide tags and one for community tags. These new tables would consist of the columns `url`, `name`, `type`, `deleted`, `ìd` and `community_id` (only on the community tag table). Additional columns for tag display style (for example background & text color) could be added later by extending this table. Splitting the instance and community tags allows the `community_id` field to be non-nullable, making orphaned community tags impossible (Thanks to [0WN463](https://github.com/0WN463) for the [idea](https://github.com/Neshura87/Lemmy-RFC/issues/2)).
+One new tables for "tags" would be required. This new table would consist of the columns `url`, `name`, `type`, `deleted`, `ìd` and `community_id`. Additional columns for tag display style (for example background & text color) could be added later by extending this table.
 
-Additionally a table for listing the tags on posts would be needed as some Databases (at least Postgres) do not support Foreign Keys in Arrays. Since the tags are split into two tables there would need to be two of these meta tables as well. The tables would consist of two foreign key columns: `tag_id` and `post_id` with `tag_id` being linked to the id column in the respective instance or community tag table and `post_id` being linked to the id column of the post table.
+Additionally a table for listing the tags on posts would be needed as some Databases (at least Postgres) do not support Foreign Keys in Arrays. The table would consist of two foreign key columns: `tag_id` and `post_id` with `tag_id` being linked to the id column in the respective community tag table and `post_id` being linked to the id column of the post table.
 
 Instance Admins should have the option to delete/ban tags.
 Instances with nsfw disables/blocked could/should auto reject posts with an nsfw type tag.
@@ -242,7 +239,7 @@ Tags in the feed should be displayed next to the post interaction elements.
 
 **Moderator Changes:**
 
-Moderators need a UI Section in the community/instance settings for adding, edditing and deleting tags. This could also implement a way to "import" a tag from another instance.
+Moderators need a UI Section in the community settings for adding, edditing and deleting tags. This could also implement a way to "import" a tag from another instance.
 Moderators should also be able to add tags to user posts.
 
 # Drawbacks
@@ -283,9 +280,11 @@ Cons:
 # Unresolved questions
 
 - How would tags federate/display on other Fediverse services such as Mastodon?
-- Should instance wide and community tags be implemented separately or together. If separately which one should be first.
+- ~~Should instance wide and community tags be implemented separately or together. If separately which one should be first.~~
+-> resolved, community tags will be implemented first with instance tags to follow some time later.
 - There is a discussion about creation permissions for tags however that changes nothing about the fundamental functionality and can be discussed after initial experience is gathered.
-- Should there be a limit on how many tags can be applied? If so, should this limit be hard coded or instance or community configurable?
+- Should there be a limit on how many tags can be applied? If so, should this limit be hard coded or community configurable?
+-> should be made configurable, still up for debate whether to be implemented with this RFC or later on.
 
 # Future possibilities
 
@@ -308,4 +307,9 @@ The current flag used to mark posts NSFW can be replaced by a Instance wide defa
 ### Tag Amount Limit
 Unlimited Tag usage might lead to undesired situations and extra moderation effort, long term the addition of Instance or Community limits to number of tags on a Post might be useful.
 
-
+### Instance wide or other tags
+The basic framework should allow this system to be used in many other contexts, however due to the complexity this should be done after an initial implementation.
+Areas that could use this system include:
+- Instance wide post tags (for example a single instance wide NSFW tag or some such)
+- User flairs
+- Tags on Communities (as opposed to on Posts)
