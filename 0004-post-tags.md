@@ -26,20 +26,29 @@ Essentially the tags serve as an easier way to message what is *inside* the post
 # Reference-level explanation
 
 ### Protocol:
-According to https://www.w3.org/TR/activitystreams-vocabulary/#dfn-tags a general tag object exists in the ActivityPub protocol. 
+According to https://www.w3.org/TR/activitystreams-vocabulary/#dfn-tags a general tag object exists in the ActivityPub protocol allowing for custom implementations so long as a type is specified.
+To keep things simple an initial community tag object should consist of the following:
+```json
+{
+  id: number,
+  url: string,
+  name: string
+}
+```
+
 Entirely unmoderated tags are not an option for lemmy as the moderation workload would be too much. Additionally users being able to type out tags themselves introduces splintering in the tag contents due to typos. A better solution is a curated list of tags users can attach to their posts. The list of tags can be maintained by both admins and moderators allowing for each community to tailor tags to their specific needs.
 Content for tags would be located in the respective root: `https://example.org/c/example/t/tag`
 
 The tag URL could then be utilized as a unique identifier for the tag, however doing so would restrict the ability to move the underlying tag url in the future. Instead an additional `id` field should be used. Using the object ID optional tag federation can also be achieved, allowing for communities across multiple instances to share content via tags (example: News tag shared across instances). This would also solve the issue of splintered communities across instances while not forcing it on the communities in question. For now tags will only be applicable to posts, however the general design allows for them to be attached to any kind of object later on, be that instance, community or user. The limited initial scope allows for easier modifications should any rough edges or missing features be discovered.
 
-To fill all needed use cases 3 tag types will be needed:
+To fill all needed use cases 3 tag flavors will be needed:
 
 - NSFW
 - Content Warning
 - Generic Tag
 
 Theoretically NSFW could be implemented using a preset "Content Warning" tag but seperating out this tag allows instances to better filter it out for moderation purposes (for example if no admin/moderator is willing to moderate NSFW content).
-Both "NSFW" and "Content Warning" tags should blur the post body by default. Additionally the `sensitive` post flag to `true` should either of these types be present in the post tags to ensure correct handling on other fediverse platforms.
+Both "NSFW" and "Content Warning" tags should blur the post body by default. Additionally the `sensitive` post flag to `true` should either of these flavors be present in the post tags to ensure correct handling on other fediverse platforms.
 
 Example Tag Objects:
 
@@ -55,7 +64,7 @@ Example Tag Objects:
 **NSFW Tag:**
 ```json
 {
-    "type": "nsfw",
+    "flavor": "nsfw",
     "id": 1,
     "url": "https://example.org/c/adult_community/t/nsfw",
     "name": "NSFW"
@@ -65,7 +74,7 @@ Example Tag Objects:
 **Spoiler Tag:**
 ```json
 {
-    "type": "cw",
+    "flavor": "cw",
     "id": 1,
     "url": "https://example.org/c/story_community/t/spoiler",
     "name": "Spoiler"
@@ -75,7 +84,7 @@ Example Tag Objects:
 **Remote Instance Spoiler Tag:**
 ```json
 {
-    "type": "cw",
+    "flavor": "cw",
     "id": 1,
     "url": "https://example.org/c/example_community/tag@example_remote.org",
     "name": "Spoiler"
@@ -97,7 +106,7 @@ Example Post json:
       "name": "Newspaper Company Tag"
     },
     {
-      "type": "cw",
+      "flavor": "cw",
       "id": 2,
       "url": "https://example.org/c/viral_clips/t/blood",
       "name": "Blood/Gore"
@@ -114,12 +123,12 @@ Example Post json:
 ### Backend:
 I am not quite familiar with the Lemmy Backend so any corrections or additions for this section are appreciated.
 
-One new tables for "tags" would be required. This new table would consist of the columns `url`, `name`, `type`, `deleted`, `ìd` and `community_id`. Additional columns for tag display style (for example background & text color) could be added later by extending this table.
+One new tables for "community_tags" would be required. This new table would consist of the columns `url`, `name`, `flavor`, `deleted`, `ìd` and `community_id`. Additional columns for tag display style (for example background & text color) could be added later by extending this table.
 
 Additionally a table for listing the tags on posts would be needed as some Databases (at least Postgres) do not support Foreign Keys in Arrays. The table would consist of two foreign key columns: `tag_id` and `post_id` with `tag_id` being linked to the id column in the respective community tag table and `post_id` being linked to the id column of the post table.
 
 Instance Admins should have the option to delete/ban tags.
-Instances with nsfw disables/blocked could/should auto reject posts with an nsfw type tag.
+Instances with nsfw disables/blocked could/should auto reject posts with an nsfw flavor tag.
 
 The following API routes will need to be added:
 
@@ -173,11 +182,11 @@ Deleted tags should not be returned unless an admin/moderator.
 Parameters:
 
 - name
-- type
+- flavor
 - community_id (optional)
 - auth
 
-Tag URL will be generated using the name and communtiy id.
+Tag URL will be generated using the name and communtiy id. Specifying tag type will not be neccesarry initially as only one type exists.
 
 Returns:
 Object of freshly created tag
@@ -187,10 +196,10 @@ Parameters:
 
 - id
 - name
-- type
+- flavor
 - auth
 
-Replaces tag name and type with the provided info. Community Id will not be consumed as a parameter as tags should not be community transferable.
+Replaces tag name and flavor with the provided info. Tag type should initially not be changeable Community Id will not be consumed as a parameter as tags should not be community transferable.
 The new Tag URL will be generated using the name and communtiy id.
 
 Returns:
