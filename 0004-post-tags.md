@@ -19,6 +19,8 @@ For example a lot of communities offer mixed content such as Memes, News and Dis
 
 Another use for tags is better handling of how posts are displayed. For example some people would like the content of a post to stay hidden for all users. This could be the case in a community focused on release discussions of Books, Movies, TV Shows or communities with content some users might find offensive but which is not neccesarily NSFW (for example jokes about certain topics).
 
+In order to ensure this consistency while filtering tags can only be created by privileged users, initially that is intended to be Admins and Community moderators.
+
 Essentially the tags serve as an easier way to message what is *inside* the post. Combining multiple tags allows for even finer control. Made a post about news in poland? Add the "News" and "Poland" tags to it and people interested exclusively in polish news can find it easily or people not interested can avoid it just as easily.
 
 # Reference-level explanation
