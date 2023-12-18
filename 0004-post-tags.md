@@ -305,4 +305,7 @@ Tagging of Instances, Communitites and Users using the same system.
 ### Migration and replacement of current "NSFW" flag in favor of "NSFW" tag:
 The current flag used to mark posts NSFW can be replaced by a Instance wide default "NSFW" flag once the feature has been field tested.
 
+### Tag Amount Limit
+Unlimited Tag usage might lead to undesired situations and extra moderation effort, long term the addition of Instance or Community limits to number of tags on a Post might be useful.
+
 
