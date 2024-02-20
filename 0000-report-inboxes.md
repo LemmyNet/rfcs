@@ -22,12 +22,17 @@ The current approach has some shortcomings:
 
 ![image](https://github.com/sunaurus/lemmy-rfcs/assets/5356547/9a21b527-6c88-4024-b287-3371d77688f4)
 
+**Note: labels on the sreenshot are illustrative, actual labels can be more user-friendy.** Maybe something like:
+* Breaks community rules (report sent to moderators)
+* Breaks instance rules (report sent to admins)
+
 ### Instead of the current single report inbox, there will be three different kinds of inboxes
 
-* Admin reports - show all reports sent to admins (only visible to admins)
+* Admin reports - show all reports sent to admins (only visible to admins) 
 * Mod reports - show all reports sent to mods for any communities the user moderates
-* All reports - Shows a read-only view of all (admin and mod) reports, only visible to admins
-   * This is a read-only version of the current 0.19.3 admin report view, and would allow admins to still keep an eye on mod actions on their instance if they wish
+   * This is equivalent to the report view that mods currently have in Lemmy already
+* All reports - Shows a view of all (admin and mod) reports, only visible to admins
+   * This is akin to the current 0.19.3 admin report view, and would allow admins to still keep an eye on mod actions on their instance if they wish
     
 The UI wouldn't need to change for mods, but for admins, there would be a new selection at the top of the reports page (the "mod reports" tab would only be visible if the admin is also a mod in any community):
 ![image](https://github.com/sunaurus/lemmy-rfcs/assets/5356547/cc4ad68c-6e85-4cd9-b324-131c06951cb3)
@@ -38,10 +43,9 @@ The UI wouldn't need to change for mods, but for admins, there would be a new se
    * To reduce overhead, **banning the reported user on the user's home instance + removing reported content should automatically resolve reports for remote admins as well**
 * Reports in the "mod reports" tab can only be resolved by relevant mods. Admins can only resolve these if they are also explicit mods in the relevant communities.
    * To reduce overhead, **admins banning the reported user on the community instance OR the user's home instance + removing reported content should automatically resolve reports for mods as well**
-* Reports in the "all reports" tab can not be resolved, they are only there for a read-only overview
-   * This is to prevent cases of admins accidentally preventing mods from moderating according to their own community rules
-   * Admins can still always explicitly take over communities by making themselves mods, in this way, they are able to handle mod reports for any abandoned communities, etc
-
+* Admins could still resolve reports in the "all reports" tab
+   * If it's not an admin report, and not a mod report from a community the admin explicitly moderates, then there should be an additional warning/confirmation when resolving a report here. This is to prevent cases of admins accidentally preventing mods from moderating according to their own community rules.
+  
 ### Mods should be able to escalate reports to admins
 
 This would generate a corresponding report in the admin inbox.
@@ -70,3 +74,7 @@ Most other social networks allow users to select whether they are reporting a vi
 # Unresolved questions
 
 Does ActivityPub properly support splitting up reports like this?
+
+# Future possibilities
+
+In the future, it might be a nice addition to have some automation to always escalate to admins, even if they're submitted as mod reports, based on report keywords. For example, "CSAM", "Spam", etc.
