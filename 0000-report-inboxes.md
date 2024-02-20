@@ -18,26 +18,29 @@ The current approach has some shortcomings:
 
 # Guide-level explanation
 
-1. Whe creating reports, users are able to select if it's a mod report, or an admin report (or both)
+### When creating reports, users will be able to select if it's a mod report, or an admin report (or both)
+
 ![image](https://github.com/sunaurus/lemmy-rfcs/assets/5356547/9a21b527-6c88-4024-b287-3371d77688f4)
 
-2. Instead of the current single report inbox, there will be three different kinds of inboxes:
-   * Admin reports - show all reports sent to admins (only visible to admins)
-   * Mod reports - show all reports sent to mods for any communities the user moderates
-   * All reports - Shows a read-only view of all (admin and mod) reports, only visible to admins
-       * This would allow admins to still keep an eye on mod actions on their instance if they wish
+### Instead of the current single report inbox, there will be three different kinds of inboxes
+
+* Admin reports - show all reports sent to admins (only visible to admins)
+* Mod reports - show all reports sent to mods for any communities the user moderates
+* All reports - Shows a read-only view of all (admin and mod) reports, only visible to admins
+   * This would allow admins to still keep an eye on mod actions on their instance if they wish
     
 The UI wouldn't need to change for mods, but for admins, there would be a new selection at the top of the reports page (the "mod reports" tab would only be visible if the admin is also a mod in any community):
 ![image](https://github.com/sunaurus/lemmy-rfcs/assets/5356547/cc4ad68c-6e85-4cd9-b324-131c06951cb3)
 
-3. Resolving reports should be more granular
-   * Reports in the "admin reports" tab can only be resolved for admins of the local instance
-       * To reduce overhead, **banning reported user on the user's home instance + removing reported content should automatically resolve reports for remote admins as well**
-   * Reports in the "mod reports" tab can only be resolved by relevant mods. Admins can only reoslve these if they are also explicit mods in the relevant communities.
-       * To reduve overhead, **banning reported user on the communities instance + removing reported content should automatically resolve reports for mods as well**
-   * Reports in the "all reports" tab can not be resolved, they are only there for a read-only overview
-       * This is to prevent cases of admins accidentally preventing mods from moderating according to their own community rules
-       * Admins can still always explicitly take over communities by making themselves mods, in this way, they are able to handle mod reports for any abandoned communities, etc
+### Resolving reports should be more granular
+
+* Reports in the "admin reports" tab can only be resolved for admins of the local instance
+   * To reduce overhead, **banning reported user on the user's home instance + removing reported content should automatically resolve reports for remote admins as well**
+* Reports in the "mod reports" tab can only be resolved by relevant mods. Admins can only reoslve these if they are also explicit mods in the relevant communities.
+   * To reduve overhead, **banning reported user on the communities instance + removing reported content should automatically resolve reports for mods as well**
+* Reports in the "all reports" tab can not be resolved, they are only there for a read-only overview
+   * This is to prevent cases of admins accidentally preventing mods from moderating according to their own community rules
+   * Admins can still always explicitly take over communities by making themselves mods, in this way, they are able to handle mod reports for any abandoned communities, etc
 
 
 # Reference-level explanation
