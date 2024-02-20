@@ -35,9 +35,9 @@ The UI wouldn't need to change for mods, but for admins, there would be a new se
 ### Resolving reports should be more granular
 
 * Reports in the "admin reports" tab can only be resolved for admins of the local instance
-   * To reduce overhead, **banning reported user on the user's home instance + removing reported content should automatically resolve reports for remote admins as well**
+   * To reduce overhead, **banning the reported user on the user's home instance + removing reported content should automatically resolve reports for remote admins as well**
 * Reports in the "mod reports" tab can only be resolved by relevant mods. Admins can only resolve these if they are also explicit mods in the relevant communities.
-   * To reduve overhead, **banning reported user on the communities instance + removing reported content should automatically resolve reports for mods as well**
+   * To reduce overhead, **admins banning reported user on the community instance OR the user's home instance + removing reported content should automatically resolve reports for mods as well**
 * Reports in the "all reports" tab can not be resolved, they are only there for a read-only overview
    * This is to prevent cases of admins accidentally preventing mods from moderating according to their own community rules
    * Admins can still always explicitly take over communities by making themselves mods, in this way, they are able to handle mod reports for any abandoned communities, etc
