@@ -29,7 +29,7 @@ The current approach has some shortcomings:
 ### Instead of the current single report inbox, there will be three different kinds of inboxes
 
 * Admin reports - show all reports sent to admins (only visible to admins) 
-* Mod reports - show all reports sent to mods for any communities the user moderates
+* Mod reports - show all reports sent to mods for any communities the user moderates (visible to admins in case they are explicit mods in any communities)
    * This is equivalent to the report view that mods currently have in Lemmy already
 * All reports - Shows a view of all (admin and mod) reports, only visible to admins
    * This is akin to the current 0.19.3 admin report view, and would allow admins to still keep an eye on mod actions on their instance if they wish
