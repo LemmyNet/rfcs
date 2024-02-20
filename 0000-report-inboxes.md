@@ -42,6 +42,9 @@ The UI wouldn't need to change for mods, but for admins, there would be a new se
    * This is to prevent cases of admins accidentally preventing mods from moderating according to their own community rules
    * Admins can still always explicitly take over communities by making themselves mods, in this way, they are able to handle mod reports for any abandoned communities, etc
 
+### Mods should be able to escalate reports to admins
+
+This would generate a corresponding report in the admin inbox.
 
 # Reference-level explanation
 
