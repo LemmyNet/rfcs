@@ -27,7 +27,7 @@ The current approach has some shortcomings:
 * Admin reports - show all reports sent to admins (only visible to admins)
 * Mod reports - show all reports sent to mods for any communities the user moderates
 * All reports - Shows a read-only view of all (admin and mod) reports, only visible to admins
-   * This would allow admins to still keep an eye on mod actions on their instance if they wish
+   * This is a read-only version of the current 0.19.3 admin report view, and would allow admins to still keep an eye on mod actions on their instance if they wish
     
 The UI wouldn't need to change for mods, but for admins, there would be a new selection at the top of the reports page (the "mod reports" tab would only be visible if the admin is also a mod in any community):
 ![image](https://github.com/sunaurus/lemmy-rfcs/assets/5356547/cc4ad68c-6e85-4cd9-b324-131c06951cb3)
