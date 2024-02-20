@@ -5,7 +5,7 @@
 
 # Summary
 
-Rather than combining all reports into a single reprt inbox, we should allow users to select whether they are reporting to mods or admins, and we should split reports into different inboxes based on that selection.
+Rather than combining all reports into a single report inbox, we should allow users to select whether they are reporting to mods or admins, and we should split reports into different inboxes based on that selection.
 
 # Motivation
 
@@ -18,7 +18,7 @@ The current approach has some shortcomings:
 
 # Guide-level explanation
 
-1. Whe creating reports, users are able to select if it's a mod report, or an admin report
+1. Whe creating reports, users are able to select if it's a mod report, or an admin report (or both)
 ![image](https://github.com/sunaurus/lemmy-rfcs/assets/5356547/9a21b527-6c88-4024-b287-3371d77688f4)
 
 2. Instead of the current single report inbox, there will be three different kinds of inboxes:
