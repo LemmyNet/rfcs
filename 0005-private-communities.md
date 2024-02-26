@@ -21,22 +21,12 @@ This change is in some ways similar to [Local-only communities](https://github.c
 
 The `CommunityVisibility` enum used in `community.visibility` gets a new variant `Private`. Queries in `post_view.rs` and `comment_view.rs` need to be adjusted so that content in communities set to private is only shown to followers. This also needs to be covered by unit tests.
 
-There needs to be a new table to store follow requests:
-```sql
-CREATE TABLE community_follow_request (
-    id serial PRIMARY KEY,
-    person_id int REFERENCES person ON UPDATE CASCADE ON DELETE CASCADE NOT NULL UNIQUE,
-    moderator_id int REFERENCES person ON UPDATE CASCADE ON DELETE CASCADE,
-    published timestamptz NOT NULL DEFAULT now()
-);
-```
-
 ## API
 
-New follow requests for a private community need to be stored in `community_follow_request` table, and not in `community_follower`. This works very similar to the `registration_application` used for site registrations. Moderators can review and approve/reject applications with the following endpoints:
-- `GET /api/v3/community/follow_request/count`
-- `GET /api/v3/community/follow_request/list`
-- `POST /api/v3/community/follow_request/approve`
+When a new follow request for a local private community is made, it needs to set `pending = true`. Moderators can review and approve/reject pending follows with the following endpoints:
+- `GET /api/v3/community/pending_follows/count`
+- `GET /api/v3/community/pending_follows/list`
+- `POST /api/v3/community/pending_follows/approve`
 
 The follow_request list for each item should contain a boolean value `is_new_instance`. This value should be true if the community has no followers from the user's instance yet, and allows showing a warning when content will be federated to a new server.
 
@@ -50,7 +40,7 @@ The new endpoints should be covered by [Typescript API tests](https://github.com
 
 ## Federation
 
-As described in the API section, follow requests for private communities are stored in `community_follow_request` instead of `community_follower`. Once a request is approved, send an `Accept` activity back to the user.
+When a `Follow` activity is received, Lemmy currently automatically responds with an `Accept`. This needs to be changed so that private communities only store the pending follow in the database, without sending an `Accept`. Once a moderator approves the request, send an `Accept` to the user. Note that only moderators registered on the same instance as the community will see follow requests.
 
 The `Group` actor for private communities remains public and can be fetched without restrictions, so that remote users can fetch it and follow it. It needs a new attribute to indicate that the group is not public. [ActivityStreams](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-group) doesn't seem to provide anything suitable, so we can simply add a custom attribute `private: true`.
 
