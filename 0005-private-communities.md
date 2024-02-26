@@ -64,7 +64,9 @@ Like in the API code we need to ensure that only followers can perform actions i
 
 ## RSS
 
-The community RSS feed needs to be disabled if the community is marked private. Other feed types need to exclude any content from private communities. This should already be handled by changes to `post_view.rs`
+The community RSS feed needs to be adjusted to avoid leaking private content. The easiest solution is to disable it for private communities, but it would also be possible to serve private community feeds with authentication, similar to the existing subscribed feed.
+
+Other feed types need to exclude any content from private communities. This should already be handled by changes to `post_view.rs`
 
 ## Frontends and Apps
 
