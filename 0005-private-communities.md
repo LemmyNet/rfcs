@@ -3,15 +3,15 @@
 - RFC PR: [LemmyNet/rfcs#0005](https://github.com/LemmyNet/rfcs/pull/5)
 - Lemmy Issue: [LemmyNet/lemmy#187](https://github.com/LemmyNet/lemmy/issues/187)
 
-# Summary
+## Summary
 
 Lemmy is currently limited to public communities with public content. This RFC proposes a way to implement private, federated communities where only approved users can read and write.
 
-# Motivation
+## Motivation
 
 Private spaces are a fundamental aspect of human communication. They allow discussing sensitive topics without interruption from outsiders. Supporting private communities in Lemmy gives a major new use case for talking among friends or within organizations. This use case is currently not covered by major Fediverse projects.
 
-# Detailed design
+## Detailed design
 
 The functionality requires only minor changes to the existing community implementation. The community profile with sidebar, icon etc remains public, so that anyone can follow the community. When a follow request is received, it needs to be manually approved by a moderator, using an interface similar to the existing registration applications. Posts and comments inside a private community are only visible to approved followers.
 
@@ -66,14 +66,18 @@ Frontends need to show an interface for moderators to approve new followers. Thi
 
 > Warning: This is the first follower from example.com. After approval, the admin of example.com is technically able to access all past and future content in this community. It is also possible that the instance at example.com makes community posts publicly available. If the community has sensitive content, make sure to only approve followers from trusted instances.
 
-# Alternatives
+## Alternatives
 
 The only alternative would be not to implement this feature in Lemmy, and rely on different platforms for private communities instead. Considering that Lemmy already has a large number of users and many important features, it is better to provide this feature directly.
 
-# Unresolved questions
+## Unresolved questions
 
 Images in private communities are publicly available for anyone who knows the url. This is probably fine as image URLs are long and randomized, so they are impossible to guess.
 
 When setting an existing community to private, this setting will generally also federate to other instances. However it is possible that some instances don't refetch the community, and old content remains public. And of course old content can be stored in external archives. This problem could be avoided by preventing existing, public communities to be marked as private.
 
 In a public community, old content missing from your instance can be fetched by visiting the community on its home instance and copying the URL of individual posts and comments into your own instance's search field to fetch them. This is not easily possible with a private community, as it cannot be viewed publicly. However this is a general problem with Lemmy communities and can be handled separately.
+
+## Further Work
+
+In addition to the described private communities, we can implement semi-private communities. These would require the same approval process for joining and posting, however all content in semi-private communities would be public. It would be useful to allow public conversations between trusted users.
