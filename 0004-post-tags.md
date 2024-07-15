@@ -68,48 +68,31 @@ Content for tags would be located in the respective root: `https://example.org/c
 The ID of a CommunityPostTag is a URL prefixed with `https://instance/c/community/tags/` and a user-chosen or generated (from the name) ID. The ID itself will rarely be user-visible, since the name is used there.
 
 For now tags will only be applicable to posts, however the general design allows for them to be attached to any kind of object later on, be that instance, community or user. The limited initial scope allows for easier modifications should any rough edges or missing features be discovered.
-
-
-Both "NSFW" and "Content Warning" tags should blur the post body by default. Additionally the `sensitive` post flag to `true` should either of these flavors be present in the post tags to ensure correct handling on other fediverse platforms.
+Additionally per Tag Inheritance could be added by expanding on this structure, more details can be found in [Future Possibilities > Tag Inheritance](#tag-inheritance).
 
 Example Tag Objects:
 
-**Generic Tag:**
 ```json
 {
-    "id": 1,
-    "url": "https://example.org/c/community/t/tag",
-    "name": "Generic Tag"
+    "type": "lemmy:CommunityPostTag",
+    "url": "https://example.org/c/news/tag/newspaper-company-1",
+    "name": "Related to Newspaper Company 1"
 }
 ```
 
-**NSFW Tag:**
 ```json
 {
-    "flavor": "nsfw",
-    "id": 1,
-    "url": "https://example.org/c/adult_community/t/nsfw",
-    "name": "NSFW"
+    "type": "lemmy:CommunityPostTag",
+    "url": "https://example.org/c/news/tag/blood-gore",
+    "name": "Blood/Gore"
 }
 ```
 
-**Spoiler Tag:**
 ```json
 {
-    "flavor": "cw",
-    "id": 1,
-    "url": "https://example.org/c/story_community/t/spoiler",
-    "name": "Spoiler"
-}
-```
-
-**Remote Instance Spoiler Tag:**
-```json
-{
-    "flavor": "cw",
-    "id": 1,
-    "url": "https://example.org/c/example_community/tag@example_remote.org",
-    "name": "Spoiler"
+    "type": "lemmy:CommunityPostTag",
+    "url": "https://example.org/c/news/tag/news",
+    "name": "News"
 }
 ```
 
@@ -318,6 +301,7 @@ Many tags will probably be the same across different communities. As such, it ma
 ### Filtering of user feeds based on tags
 
 ### Pre-Selected tags determined by Instance/Community/User settings:
+
 Allows for easier handling for cases where a few tags are used very often (example: a news community could pre-select the "News" tag, thereby automatically adding it to every users post creation form)
 
 Addition by [RocketDerp](https://github.com/RocketDerp) (Source: [GitHub Comment](https://github.com/Neshura87/Lemmy-RFC/commit/a11727bb992aa91e89354286876d7144b61b926f#commitcomment-125201367)):
@@ -329,14 +313,23 @@ Tagging of Instances, Communitites and Users using the same system.
 >Perhaps a scope smallint added to the proposed database table... scope 0 = all, 1 = community itself tagged, 2 = post tagged, 3 = user tagged. And community_id specific ones would have to be 2 = post.
 
 ### Migration and replacement of current "NSFW" flag in favor of "NSFW" tag:
+
 The current flag used to mark posts NSFW can be replaced by a Instance wide default "NSFW" flag once the feature has been field tested.
 
-### Tag Amount Limit
+### Tag Amount Limit:
+
 Unlimited Tag usage might lead to undesired situations and extra moderation effort, long term the addition of Instance or Community limits to number of tags on a Post might be useful.
 
-### Instance wide or other tags
+### Instance wide or other tags:
+
 The basic framework should allow this system to be used in many other contexts, however due to the complexity this should be done after an initial implementation.
 Areas that could use this system include:
 - Instance wide post tags (for example a single instance wide NSFW tag or some such)
 - User flairs
 - Tags on Communities (as opposed to on Posts)
+
+### Tag Inheritance:
+
+Initially Tags will have a flat structure, however an inheritance system could be introduced later on to easy usability for both users and moderators.
+Such a system would add an attribute `inherits` to the tag object which would then reference the URL of the parent tag. If no or an empty `inherits` field is given the tag is a "root" tag and has no parent.
+The inheritance trees could then be used to enhance search filtering, tag settings upon creation and/or cosmetic behaviour of tags.
