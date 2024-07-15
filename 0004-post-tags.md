@@ -340,7 +340,9 @@ Cons:
 -> should be made configurable, still up for debate whether to be implemented with this RFC or later on.
 
 # Future possibilities
+### Global Tags
 
+Many tags will probably be the same across different communities. As such, it makes sense to create global tags in the future. These tag objects would still be assigned to posts by users or moderators, but their type would be `GlobalPostTag` and their ID would be global (e.g. `https://join-lemmy.org/tags/xxx`). This way, a user could configure user-global allow/block lists of tags in their Lemmy UI / App.  For example Spoiler,Gore,NSFL,Trigger Warning, ...
 ### Filtering of user feeds based on tags
 
 ### Pre-Selected tags determined by Instance/Community/User settings:
