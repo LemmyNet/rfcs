@@ -159,7 +159,7 @@ Instances with nsfw disables/blocked could/should auto reject posts with an nsfw
 
 The following API routes will need to be added:
 
-**GET /tag/list:**
+**GET /api/v3/tag/list:**
 Parameters:
 
 - community_id (required)
@@ -184,7 +184,7 @@ Deleted tags should not be returned in the list unless an admin/moderator.
 ```
 
 
-**POST /tag:**
+**POST /api/v3/tag/create:**
 Parameters:
 
 - id_slug // the generated url will be https://instance/c/community/tags/id_slug
@@ -195,10 +195,10 @@ Parameters:
 Returns:
 Object of freshly created tag
 
-**PUT /tag:**
+**PUT /api/v3/tag:**
 
 Request to update tag object, see the post update API request.
-**POST /tag/delete:**
+**POST /api/v3/tag/delete:**
 
 Request to delete tag object, see the post delete API request.
 
