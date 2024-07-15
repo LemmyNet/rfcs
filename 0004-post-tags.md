@@ -26,7 +26,41 @@ Essentially the tags serve as an easier way to message what is *inside* the post
 # Reference-level explanation
 
 ### Protocol:
-According to https://www.w3.org/TR/activitystreams-vocabulary/#dfn-tags a general tag object exists in the ActivityPub protocol allowing for custom implementations so long as a type is specified.
+The [ActivityStreams vocabulary](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-tags) defines that any object can have a list of tags associated with it. Tags in AS can be of any type, so we define our own type `CommunityPostTag`:
+
+```jsonc
+{
+  "type": "lemmy:CommunityPostTag",
+  "id": "community-url/tag/tag-id", // e.g. https://example.org/c/example/tag/News
+  "name": "Readable Name of Tag"
+}
+```
+
+
+In JSON-LD terms, this object will live in the lemmy namespace as `https://join-lemmy.org/ns#CommunityPostTag`), which in objects lemmy sends out is always imported from https://join-lemmy.org/context.json as the prefix `lemmy:`, so we can refer to it as `lemmy:CommunityPostTag`. For example, a lemmy post object (Page in AP terms) would look like this:
+
+```json
+{
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "https://join-lemmy.org/context.json"
+  ],
+  "id": "https://enterprise.lemmy.ml/post/55143",
+  "type": "Page",
+  "audience": "https://enterprise.lemmy.ml/c/tenforward",
+  "name": "Post title",
+  "content": "<p>This is a post in the /c/tenforward community</p>\n",
+  "tag": [
+    {
+      "type": "lemmy:CommunityPostTag",
+      "id": "https://enterprise.lemmy.ml/c/tenforward/tag/news",
+      "name": "News"
+    }
+  ]
+  // ... more required props
+}
+```
+
 To keep things simple an initial community tag object should consist of the following:
 ```json
 {
