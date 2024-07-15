@@ -61,14 +61,6 @@ In JSON-LD terms, this object will live in the lemmy namespace as `https://join-
 }
 ```
 
-To keep things simple an initial community tag object should consist of the following:
-```json
-{
-  id: number,
-  url: string,
-  name: string
-}
-```
 
 Entirely unmoderated tags are not an option for lemmy as the moderation workload would be too much. Additionally users being able to type out tags themselves introduces splintering in the tag contents due to typos. A better solution is a curated list of tags users can attach to their posts. The list of tags can be maintained by both admins and moderators allowing for each community to tailor tags to their specific needs.
 Content for tags would be located in the respective root: `https://example.org/c/example/tag/tag`
