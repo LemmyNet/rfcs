@@ -65,15 +65,11 @@ In JSON-LD terms, this object will live in the lemmy namespace as `https://join-
 Entirely unmoderated tags are not an option for lemmy as the moderation workload would be too much. Additionally users being able to type out tags themselves introduces splintering in the tag contents due to typos. A better solution is a curated list of tags users can attach to their posts. The list of tags can be maintained by both admins and moderators allowing for each community to tailor tags to their specific needs.
 Content for tags would be located in the respective root: `https://example.org/c/example/tag/tag`
 
-The tag URL could then be utilized as a unique identifier for the tag, however doing so would restrict the ability to move the underlying tag url in the future. Instead an additional `id` field should be used. Using the object ID optional tag federation can also be achieved, allowing for communities across multiple instances to share content via tags (example: News tag shared across instances). This would also solve the issue of splintered communities across instances while not forcing it on the communities in question. For now tags will only be applicable to posts, however the general design allows for them to be attached to any kind of object later on, be that instance, community or user. The limited initial scope allows for easier modifications should any rough edges or missing features be discovered.
+The ID of a CommunityPostTag is a URL prefixed with `https://instance/c/community/tags/` and a user-chosen or generated (from the name) ID. The ID itself will rarely be user-visible, since the name is used there.
 
-To fill all needed use cases 3 tag flavors will be needed:
+For now tags will only be applicable to posts, however the general design allows for them to be attached to any kind of object later on, be that instance, community or user. The limited initial scope allows for easier modifications should any rough edges or missing features be discovered.
 
-- NSFW
-- Content Warning
-- Generic Tag
 
-Theoretically NSFW could be implemented using a preset "Content Warning" tag but seperating out this tag allows instances to better filter it out for moderation purposes (for example if no admin/moderator is willing to moderate NSFW content).
 Both "NSFW" and "Content Warning" tags should blur the post body by default. Additionally the `sensitive` post flag to `true` should either of these flavors be present in the post tags to ensure correct handling on other fediverse platforms.
 
 Example Tag Objects:
