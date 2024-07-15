@@ -190,78 +190,50 @@ Deleted tags should not be returned in the list unless an admin/moderator.
 {
     "tags": [
         {
-            "url": "https://example.org/t/tag",
-            "name": "Generic Tag",
-            "id": 1,
-            "community_id": 1
+            "ap_id": "https://example.org/c/community/tag/foo", // activitypub id
+            "name": "Foo Tag",
+            "id": 1, // the lemmy-internal id
+            "community_id": 1 // lemmy-internal community id
         },
         {...}
     ]
 }
 ```
 
-**GET /tag:**
-Parameters:
-
-- tag_id
-- auth (optional)
-
-Returns:
-Returns the information for a single tag.
-Deleted tags should not be returned unless an admin/moderator.
-
-```json
-{
-    "tag": 
-    {
-        "url": "https://example.org/t/tag",
-        "name": "Generic Tag",
-        "id": 1,
-        "community_id": 1
-    }
-}
-```
 
 **POST /tag:**
 Parameters:
 
+- id_slug // the generated url will be https://instance/c/community/tags/id_slug
 - name
-- flavor
-- community_id (optional)
-- auth
+- community_id
 
-Tag URL will be generated using the name and communtiy id. Specifying tag type will not be neccesarry initially as only one type exists.
 
 Returns:
 Object of freshly created tag
 
 **PUT /tag:**
-Parameters:
 
-- id
-- name
-- flavor
-- auth
-
-Replaces tag name and flavor with the provided info. Tag type should initially not be changeable Community Id will not be consumed as a parameter as tags should not be community transferable.
-The new Tag URL will be generated using the name and communtiy id.
-
-Returns:
-Object of freshly created tag
-
+Request to update tag object, see the post update API request.
 **POST /tag/delete:**
-Parameters:
 
-- id
-- deleted
-- auth
+Request to delete tag object, see the post delete API request.
 
-Deletes the tag associated with the id. Updates `deleted` field in table. Allows for un-deleting a tag.
+**ActivityPub Endpoint: GET /c/community/tag/foo (Content-Type: application/activity+json)**
 
-Returns:
-Object of freshly created tag
+This is the AP endpoint (not a lemmy api endpoint) and must contain the tag object response in JSON-LD:
 
-
+```json
+{
+  "@context": [
+    "https://join-lemmy.org/context.json",
+    "https://www.w3.org/ns/activitystreams"
+  ],
+  "id": "https://example.org/c/community/tag/foo", // activitypub id
+  "type": "lemmy:CommunityPostTag",
+  "name": "Foo Tag"
+}
+```
 **Additionally:**
 
 Posts will need to be made editable by moderators, this is currently not possible but will be required to allow mods to fix missing or misused tags on posts.
