@@ -119,23 +119,31 @@ Example Post json:
 
 ``` json
 {
+  "@context": [
+    "https://www.w3.org/ns/activitystreams",
+    "https://join-lemmy.org/context.json"
+  ],
+  "to": [
+    "https://example.org/c/news",
+    "https://www.w3.org/ns/activitystreams#Public"
+  ],
+  "audience": "https://example.org/c/news",
   "content": ". . .",
   "sensitive": true,
   "tag": [
     {
-      "id": 1,
-      "url": "https://example.org/c/news/t/newspaper_company_1",
-      "name": "Newspaper Company Tag"
+      "type": "lemmy:CommunityPostTag",
+      "url": "https://example.org/c/news/tag/newspaper-company-1",
+      "name": "Related to Newspaper Company 1"
     },
     {
-      "flavor": "cw",
-      "id": 2,
-      "url": "https://example.org/c/viral_clips/t/blood",
+      "type": "lemmy:CommunityPostTag",
+      "url": "https://example.org/c/news/tag/blood-gore",
       "name": "Blood/Gore"
     },
     {
-      "id": 3,
-      "url": "https://example.org/c/tv_shows/t/news@example_remote.org",
+      "type": "lemmy:CommunityPostTag",
+      "url": "https://example.org/c/news/tag/news",
       "name": "News"
     }
   ]
