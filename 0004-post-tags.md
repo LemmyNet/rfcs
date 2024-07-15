@@ -153,9 +153,23 @@ Example Post json:
 ### Backend:
 I am not quite familiar with the Lemmy Backend so any corrections or additions for this section are appreciated.
 
-One new tables for "community_tags" would be required. This new table would consist of the columns `url`, `name`, `flavor`, `deleted`, `ìd` and `community_id`. Additional columns for tag display style (for example background & text color) could be added later by extending this table.
+One new table for "community_post_tag" would be required:
 
-Additionally a table for listing the tags on posts would be needed as some Databases (at least Postgres) do not support Foreign Keys in Arrays. The table would consist of two foreign key columns: `tag_id` and `post_id` with `tag_id` being linked to the id column in the respective community tag table and `post_id` being linked to the id column of the post table.
+```sql
+CREATE TABLE community_post_tag (
+  id bigserial PRIMARY KEY,
+  community_id bigint REFERENCES community.id,
+  ap_id text UNIQUE NOT NULL,
+  name text NOT NULL,
+  published timestamptz NOT NULL,
+  deleted timestamptz NULL,
+);
+```
+  
+
+Additional columns for tag display style (for example background & text color) and hierarchy could be added later by extending this table.
+
+Additionally, a way to store the association between posts and tags is needed. This can either be done with a `tags: array[bigint]` column in the post table and a inverse index (`GIN` or `GIST`) or with a new table `post_tag (post_id, tag_id)`
 
 Instance Admins should have the option to delete/ban tags.
 Instances with nsfw disables/blocked could/should auto reject posts with an nsfw flavor tag.
