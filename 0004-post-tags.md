@@ -71,7 +71,7 @@ To keep things simple an initial community tag object should consist of the foll
 ```
 
 Entirely unmoderated tags are not an option for lemmy as the moderation workload would be too much. Additionally users being able to type out tags themselves introduces splintering in the tag contents due to typos. A better solution is a curated list of tags users can attach to their posts. The list of tags can be maintained by both admins and moderators allowing for each community to tailor tags to their specific needs.
-Content for tags would be located in the respective root: `https://example.org/c/example/t/tag`
+Content for tags would be located in the respective root: `https://example.org/c/example/tag/tag`
 
 The tag URL could then be utilized as a unique identifier for the tag, however doing so would restrict the ability to move the underlying tag url in the future. Instead an additional `id` field should be used. Using the object ID optional tag federation can also be achieved, allowing for communities across multiple instances to share content via tags (example: News tag shared across instances). This would also solve the issue of splintered communities across instances while not forcing it on the communities in question. For now tags will only be applicable to posts, however the general design allows for them to be attached to any kind of object later on, be that instance, community or user. The limited initial scope allows for easier modifications should any rough edges or missing features be discovered.
 
