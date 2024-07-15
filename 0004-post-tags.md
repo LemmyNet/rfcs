@@ -179,11 +179,11 @@ The following API routes will need to be added:
 **GET /tag/list:**
 Parameters:
 
-- community_id (optional) 
+- community_id (required)
 - auth (optional)
 
 Returns:
-List of all tags, if a community id is specified only tags of that communtiy are returned.
+List of all tags in a community.
 Deleted tags should not be returned in the list unless an admin/moderator.
 
 ```json
