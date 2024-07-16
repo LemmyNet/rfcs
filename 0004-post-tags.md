@@ -37,7 +37,7 @@ The [ActivityStreams vocabulary](https://www.w3.org/TR/activitystreams-vocabular
 ```
 
 
-In JSON-LD terms, this object will live in the lemmy namespace as `https://join-lemmy.org/ns#CommunityPostTag`), which in objects lemmy sends out is always imported from https://join-lemmy.org/context.json as the prefix `lemmy:`, so we can refer to it as `lemmy:CommunityPostTag`. For example, a lemmy post object (Page in AP terms) would look like this:
+In JSON-LD terms, this type will live in the lemmy namespace as `https://join-lemmy.org/ns#CommunityPostTag`), which in objects lemmy sends out is always imported from https://join-lemmy.org/context.json as the prefix `lemmy:`, so we can refer to it as `lemmy:CommunityPostTag`. For example, a lemmy post object (Page in AP terms) would look like this:
 
 ```json
 {
@@ -96,7 +96,7 @@ Example Tag Objects:
 }
 ```
 
-Below is an example of a News post in the news community. The post has a communtiy tag for the newspaper company that published it, as well as a content warning for Blood/Gore. In order to share this news post across instances it also is tagged with the news tag of a remote instance.
+Below is an example of a News post in the news community. The post has a communtiy tag for the newspaper company that published it, as well as a content warning for Blood/Gore.
 
 Example Post json:
 
