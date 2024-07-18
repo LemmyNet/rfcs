@@ -140,8 +140,8 @@ One new table for "community_post_tag" would be required:
 
 ```sql
 CREATE TABLE community_post_tag (
-  id bigserial PRIMARY KEY,
-  community_id bigint REFERENCES community.id,
+  id serial PRIMARY KEY,
+  community_id int REFERENCES community.id,
   ap_id text UNIQUE NOT NULL,
   name text NOT NULL,
   published timestamptz NOT NULL,
