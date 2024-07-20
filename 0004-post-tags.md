@@ -9,7 +9,7 @@ Ability to add descriptive tags to Posts similar to Reddit's Flair system primar
 
 # Motivation
 
-Post Tags would allow for vastly improved content filtering (and to a lesser extent searching) both for Users and Admins/Moderators. 
+Post Tags would allow for vastly improved content filtering (and to a lesser extent searching) both for Users and Admins/Moderators.
 
 # Guide-level explanation
 
@@ -21,21 +21,21 @@ Another use for tags is better handling of how posts are displayed. For example 
 
 In order to ensure this consistency while filtering tags can only be created by privileged users, initially that is intended to be Admins and Community moderators.
 
-Essentially the tags serve as an easier way to message what is *inside* the post. Combining multiple tags allows for even finer control. Made a post about news in poland? Add the "News" and "Poland" tags to it and people interested exclusively in polish news can find it easily or people not interested can avoid it just as easily.
+Essentially the tags serve as an easier way to message what is _inside_ the post. Combining multiple tags allows for even finer control. Made a post about news in poland? Add the "News" and "Poland" tags to it and people interested exclusively in polish news can find it easily or people not interested can avoid it just as easily.
 
 # Reference-level explanation
 
-### Protocol:
+## Protocol:
+
 The [ActivityStreams vocabulary](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-tags) defines that any object can have a list of tags associated with it. Tags in AS can be of any type, so we define our own type `CommunityPostTag`:
 
 ```jsonc
 {
   "type": "lemmy:CommunityPostTag",
   "id": "community-url/tag/tag-id", // e.g. https://example.org/c/example/tag/News
-  "name": "Readable Name of Tag"
+  "name": "Readable Name of Tag",
 }
 ```
-
 
 In JSON-LD terms, this type will live in the lemmy namespace as `https://join-lemmy.org/ns#CommunityPostTag`), which in objects lemmy sends out is always imported from https://join-lemmy.org/context.json as the prefix `lemmy:`, so we can refer to it as `lemmy:CommunityPostTag`. For example, a lemmy post object (Page in AP terms) would look like this:
 
@@ -61,7 +61,6 @@ In JSON-LD terms, this type will live in the lemmy namespace as `https://join-le
 }
 ```
 
-
 Entirely unmoderated tags are not an option for lemmy as the moderation workload would be too much. Additionally users being able to type out tags themselves introduces splintering in the tag contents due to typos. A better solution is a curated list of tags users can attach to their posts. The list of tags can be maintained by both admins and moderators allowing for each community to tailor tags to their specific needs.
 Content for tags would be located in the respective root: `https://example.org/c/example/tag/tag`
 
@@ -74,25 +73,25 @@ Example Tag Objects:
 
 ```json
 {
-    "type": "lemmy:CommunityPostTag",
-    "url": "https://example.org/c/news/tag/newspaper-company-1",
-    "name": "Related to Newspaper Company 1"
+  "type": "lemmy:CommunityPostTag",
+  "url": "https://example.org/c/news/tag/newspaper-company-1",
+  "name": "Related to Newspaper Company 1"
 }
 ```
 
 ```json
 {
-    "type": "lemmy:CommunityPostTag",
-    "url": "https://example.org/c/news/tag/blood-gore",
-    "name": "Blood/Gore"
+  "type": "lemmy:CommunityPostTag",
+  "url": "https://example.org/c/news/tag/blood-gore",
+  "name": "Blood/Gore"
 }
 ```
 
 ```json
 {
-    "type": "lemmy:CommunityPostTag",
-    "url": "https://example.org/c/news/tag/news",
-    "name": "News"
+  "type": "lemmy:CommunityPostTag",
+  "url": "https://example.org/c/news/tag/news",
+  "name": "News"
 }
 ```
 
@@ -100,7 +99,7 @@ Below is an example of a News post in the news community. The post has a communt
 
 Example Post json:
 
-``` json
+```json
 {
   "@context": [
     "https://www.w3.org/ns/activitystreams",
@@ -133,7 +132,8 @@ Example Post json:
 }
 ```
 
-### Backend:
+## Backend:
+
 I am not quite familiar with the Lemmy Backend so any corrections or additions for this section are appreciated.
 
 One new table for "community_post_tag" would be required:
@@ -148,11 +148,10 @@ CREATE TABLE community_post_tag (
   deleted timestamptz NULL,
 );
 ```
-  
 
 Additional columns for tag display style (for example background & text color) and hierarchy could be added later by extending this table.
 
-Additionally, a way to store the association between posts and tags is needed. This can either be done with a `tags: array[bigint]` column in the post table and a inverse index (`GIN` or `GIST`) or with a new table `post_tag (post_id, tag_id)`
+Additionally, a way to store the association between posts and tags is needed. This can either be done with a `tags: array[int]` column in the post table and a inverse index (`GIN` or `GIST`) or with a new table `post_tag (post_id, tag_id)`
 
 Instance Admins should have the option to delete/ban tags.
 Instances with nsfw disables/blocked could/should auto reject posts with an nsfw flavor tag.
@@ -183,14 +182,12 @@ Deleted tags should not be returned in the list unless an admin/moderator.
 }
 ```
 
-
 **POST /api/v3/tag/create:**
 Parameters:
 
 - id_slug // the generated url will be https://instance/c/community/tags/id_slug
 - name
 - community_id
-
 
 Returns:
 Object of freshly created tag
@@ -217,33 +214,33 @@ This is the AP endpoint (not a lemmy api endpoint) and must contain the tag obje
   "name": "Foo Tag"
 }
 ```
+
 **Additionally:**
 
 Posts will need to be made editable by moderators, this is currently not possible but will be required to allow mods to fix missing or misused tags on posts.
 Ideally the endpoint that will be opened for this should only allow the addition or removal of tags from a post and nothing else to prevent abuse.
 As such I propose the use of:
-`POST /post/tag` and `POST /post/tag/delete` for these roles. 
+`POST /post/tag` and `POST /post/tag/delete` for these roles.
 Nesting these endpoints under the `/post` endpoint seems appropriate.
 Shared parameters would be authentication, `post_id` and `tag_id` with an additional `delete` parameter for the delete endpoint.
 
 Groups that should be able to add/edit the tags:
+
 - Instance Admins of the Community
 - Moderators of the Community
 - Post creator
 
-### Frontend:
+## Frontend:
 
 **General Changes:**
 
 Tags can be listed next to the Post title in the feed and at the end of the post in the post view.
-Adding tags to a post can be implemented via a separate tag box where they can be typed in with search support. 
+Adding tags to a post can be implemented via a separate tag box where they can be typed in with search support.
 
 ![tags post view iamge](https://github.com/Neshura87/Lemmy-RFC/blob/main/tags_post_view.png?raw=true)
 
 Tags in the feed should be displayed next to the post interaction elements.
 ![tags feed view iamge](https://github.com/Neshura87/Lemmy-RFC/blob/main/tags_feed_view.png?raw=true)
-
-
 
 **Moderator Changes:**
 
@@ -265,11 +262,13 @@ Similar implementations can be found on Reddit as well as a great many image hos
 Reddit's Flair System is rather restrictive, a Post can only have a single custom Flair (such as "News") greatly limiting the usefullness of the feature.
 
 Pros:
+
 - low moderation effort due to predefined tags
 - no/little content fragmentation since typos are not possible
 - no flair spam due to only 1 flair being allowed at a time
 
 Cons:
+
 - extreme moderation effort for 1st time setup due to inability to mix flairs
 - filter lists get extremely long because all variants of a flair need to be filtered (for example "News Europe", "News America", etc. instead of just "News")
 - flairs need to be created before being usable
@@ -277,10 +276,12 @@ Cons:
 Tag/Flair Systems on Image hosting platform generally tend to favor a more unmoderated experience, often allowing Users to type in the tags themselves.
 
 Pros:
+
 - enhanced user freedom when applying tags
 - no delay between arising demand for tag and creation of the tag
 
 Cons:
+
 - greater moderation demand since tags have to be checked for inappropriate content
 - very high chance for content fragmentation (typos, differences in naming things, language barriers)
 - almost completely removes the ability of users to blocklist content tags (pronography would slip past a "pornography" blocklist).
@@ -289,18 +290,20 @@ Cons:
 
 - How would tags federate/display on other Fediverse services such as Mastodon?
 - ~~Should instance wide and community tags be implemented separately or together. If separately which one should be first.~~
--> resolved, community tags will be implemented first with instance tags to follow some time later.
+  -> resolved, community tags will be implemented first with instance tags to follow some time later.
 - There is a discussion about creation permissions for tags however that changes nothing about the fundamental functionality and can be discussed after initial experience is gathered.
 - Should there be a limit on how many tags can be applied? If so, should this limit be hard coded or community configurable?
--> should be made configurable, still up for debate whether to be implemented with this RFC or later on.
+  -> should be made configurable, still up for debate whether to be implemented with this RFC or later on.
 
 # Future possibilities
-### Global Tags
 
-Many tags will probably be the same across different communities. As such, it makes sense to create global tags in the future. These tag objects would still be assigned to posts by users or moderators, but their type would be `GlobalPostTag` and their ID would be global (e.g. `https://join-lemmy.org/tags/xxx`). This way, a user could configure user-global allow/block lists of tags in their Lemmy UI / App.  For example Spoiler,Gore,NSFL,Trigger Warning, ...
-### Filtering of user feeds based on tags
+## Global Tags
 
-### Pre-Selected tags determined by Instance/Community/User settings:
+Many tags will probably be the same across different communities. As such, it makes sense to create global tags in the future. These tag objects would still be assigned to posts by users or moderators, but their type would be `GlobalPostTag` and their ID would be global (e.g. `https://join-lemmy.org/tags/xxx`). This way, a user could configure user-global allow/block lists of tags in their Lemmy UI / App. For example Spoiler,Gore,NSFL,Trigger Warning, ...
+
+## Filtering of user feeds based on tags
+
+## Pre-Selected tags determined by Instance/Community/User settings:
 
 Allows for easier handling for cases where a few tags are used very often (example: a news community could pre-select the "News" tag, thereby automatically adding it to every users post creation form)
 
@@ -308,27 +311,28 @@ Addition by [RocketDerp](https://github.com/RocketDerp) (Source: [GitHub Comment
 
 Tagging of Instances, Communitites and Users using the same system.
 
->There are issues open on Lemmy project to have flares for users, flares for posts. I think community itself being tagged is another thing to consider and could be a means to implement a multi-community (multi-reddit) presentation system for blending communities on a post list. 
->[...]
->Perhaps a scope smallint added to the proposed database table... scope 0 = all, 1 = community itself tagged, 2 = post tagged, 3 = user tagged. And community_id specific ones would have to be 2 = post.
+> There are issues open on Lemmy project to have flares for users, flares for posts. I think community itself being tagged is another thing to consider and could be a means to implement a multi-community (multi-reddit) presentation system for blending communities on a post list.
+> [...]
+> Perhaps a scope smallint added to the proposed database table... scope 0 = all, 1 = community itself tagged, 2 = post tagged, 3 = user tagged. And community_id specific ones would have to be 2 = post.
 
-### Migration and replacement of current "NSFW" flag in favor of "NSFW" tag:
+## Migration and replacement of current "NSFW" flag in favor of "NSFW" tag:
 
 The current flag used to mark posts NSFW can be replaced by a Instance wide default "NSFW" flag once the feature has been field tested.
 
-### Tag Amount Limit:
+## Tag Amount Limit:
 
 Unlimited Tag usage might lead to undesired situations and extra moderation effort, long term the addition of Instance or Community limits to number of tags on a Post might be useful.
 
-### Instance wide or other tags:
+## Instance wide or other tags:
 
 The basic framework should allow this system to be used in many other contexts, however due to the complexity this should be done after an initial implementation.
 Areas that could use this system include:
+
 - Instance wide post tags (for example a single instance wide NSFW tag or some such)
 - User flairs
 - Tags on Communities (as opposed to on Posts)
 
-### Tag Inheritance:
+## Tag Inheritance:
 
 Initially Tags will have a flat structure, however an inheritance system could be introduced later on to easy usability for both users and moderators.
 Such a system would add an attribute `inherits` to the tag object which would then reference the URL of the parent tag. If no or an empty `inherits` field is given the tag is a "root" tag and has no parent.
