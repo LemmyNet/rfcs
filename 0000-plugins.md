@@ -59,7 +59,7 @@ More functions may be added if they are needed for the initial plugins.
 
 ## Initial Plugins
 
-These can mainly serve as proof of concept, and as examples which can be modified by plugin developers. Include integration tests to ensure that functionality works with new Lemmy changes.
+These can mainly serve as proof of concept, and as examples which can be modified by plugin developers. Include integration tests to ensure that functionality works with new Lemmy changes. These plugins should be written in a variety of languages. It could make sense to put them into a separate repo.
 
 - Block only downvotes from a specific instance
 - Replace words in post or comment text (eg "cloud to butt")
