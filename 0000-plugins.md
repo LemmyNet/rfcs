@@ -55,6 +55,8 @@ Lemmy database functions can be exposed by plugins via [host functions](https://
 
 - Instance::read_or_create 
 
+More functions may be added if they are needed for the initial plugins.
+
 ## Initial Plugins
 
 These can mainly serve as proof of concept, and as examples which can be modified by plugin developers. Include integration tests to ensure that functionality works with new Lemmy changes.
@@ -84,11 +86,11 @@ What are the licensing requirements for plugins, if any? Are proprietary plugins
 
 # Future possibilities
 
-In the future we can add more hooks for plugins, such as hooks for other API actions. 
+In the future we can add hooks for other user actions, as well as additional host functions.
 
-We could also support implementing post ranking algorithms in plugins.
+We could also support implementing new post ranking algorithms in plugins.
 
-It should also be possible to let plugins define new API routes for additional functionality.
+Additionally it should be possible for plugins to define new API routes for additional functionality.
 
 We may also consider to move some existing features into plugins. This applies to features which are mostly separate from core functionality, and which are only used by few instances. For example:
 - Slur filter
