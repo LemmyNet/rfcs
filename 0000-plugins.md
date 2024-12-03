@@ -25,6 +25,8 @@ https://extism.org/
 
 Lemmy will have to add hooks for specific actions, which can then be used by plugins. In general there are two types of hooks: before an action is written to the database, so it can be rejected or altered. And after it is written to the database, mainly for different types of notifications.
 
+Data is passed to plugins using the existing structs linked below, serialized to JSON.
+
 For the initial implementation, the following hooks will be available:
 
 ### Before writing to Database
@@ -32,26 +34,81 @@ For the initial implementation, the following hooks will be available:
 These hooks can be used to reject or alter user actions based on different criteria.
 
 - Post
-    - Create local post
-    - Update local post
-    - Receive federated post
+    - [create_local_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L67)
+    - [update_local_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L98)
+    - [receive_federated_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L67)
+    - [post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L171)
 - Comment
-    - Create local comment
-    - Update local comment
-    - Receive federated comment
-- New vote
-    
+    - [create_local_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L59)
+    - [update_local_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L84)
+    - [receive_federated_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L59)
+    - [post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L119)
+
 ### After writing to Database
 
 These are mainly useful to generate notifications.
 
-- Post created or edited
-- Comment created or edited
-- New vote
+- Post
+	- [new_post](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L19)
+	- [new_post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L157)
+- Comment
+	- [new_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L27)
+	- [new_comment_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L105)
+
+## Example
+
+Below is a simple Go plugin which uses the `create_local_post` hook to replace `Rust` in post body with `Go`, and reject posts which mention `Java`. 
+
+Also checkout the documentation for Extism's [Go Plugin Development Kit](https://github.com/extism/go-pdk).
+
+```golang
+package main
+
+import (
+	"github.com/extism/go-pdk"
+	"strings"
+)
+
+type CreatePost struct {
+	Name string `json:"name"`
+	Body *string `json:"body,omitempty"`
+	...
+  }
+
+//export create_local_post
+func my_plugin() int32 {
+	params := CreatePost{}
+	// Read post data
+	err := pdk.InputJSON(&params)
+	if err != nil {
+		pdk.SetError(err)
+		return 1
+	}
+	if strings.Contains(params.Body, "Java") {
+		// Throw error to reject post
+		pdk.SetError("We dont talk about Java)
+		return 1
+	}
+	params.Body = strings.Replace(params.Body, "Rust", "Go", -1);
+	// Write back post data
+	err = pdk.OutputJSON(params)
+	if err != nil {
+		pdk.SetError(err)
+		return 1
+	}
+	return 0
+}
+
+func main() {}
+```
 
 ## Host Functions
 
-Lemmy database functions can be exposed by plugins via [host functions](https://extism.org/docs/concepts/host-functions). For the beginning the following functions will be exposed:
+Plugins will need access to the Lemmy database for various reasons, such as determining which instance a new post is coming from, or storing custom data. The easiest way to do this would be direct database access for plugins, but this has many problems:
+- Database schema changes across Lemmy versions, which would make it very difficult to make plugins compatible with new Lemmy versions, and prevent instances from upgrading
+- Plugins could accidentally delete data or break the database
+
+As such we need to use a different approach, by exposting specific database calls from Lemmy via [host functions](https://extism.org/docs/concepts/host-functions). For the beginning the following functions will be exposed:
 
 - Instance::read_or_create 
 
@@ -70,7 +127,7 @@ These can mainly serve as proof of concept, and as examples which can be modifie
 
 # Drawbacks
 
-Plugins will likely have worse performance than native Rust.
+Plugins may have a negative impact on Lemmy's performance. It is up to plugin developers and instance admins to ensure that plugins run adequately. In any case plugins are only called for POST actions but not for GET. This means slow plugins might result in longer waiting time to submit posts, but passive browsing will be unaffected.
 
 # Rationale and alternatives
 
