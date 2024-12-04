@@ -15,9 +15,7 @@ TODO
 
 ## Extism
 
-An open source framework to develop plugins for Rust projects. It supports numerous different languages by compiling them to webassembly which gets called from Rust.
-
-https://extism.org/
+[Extism](https://extism.org/) is an open source framework to develop plugins for Rust projects. It supports numerous different languages by compiling them to webassembly which gets called from Rust.
 
 # Reference-level explanation
 
@@ -116,13 +114,15 @@ More functions may be added if they are needed for the initial plugins.
 
 ## Initial Plugins
 
-These can mainly serve as proof of concept, and as examples which can be modified by plugin developers. Include integration tests to ensure that functionality works with new Lemmy changes. These plugins should be written in a variety of languages. It could make sense to put them into a separate repo.
+These can mainly serve as proof of concept, and as examples which can be modified by plugin developers. Include integration tests to ensure that functionality works with new Lemmy changes. These plugins should be written in a variety of languages, and live in a separate repo `lemmy-plugin-examples`.
 
 - Block only downvotes from a specific instance
 - Replace words in post or comment text (eg "cloud to butt")
 - Replace Youtube URLs in post links with [Invidious](https://invidious.io/)
 - Push notifications (send data of new posts to localhost url, [#2631](https://github.com/LemmyNet/lemmy/issues/2631))
 - Language detection (automatically apply language tag to posts/comments, [#2870](https://github.com/LemmyNet/lemmy/issues/2870))
+- Archive previous versions of posts when they are edited
+- Reject comments from specific user IDs (like [!santabot@slrpnk.net](https://slrpnk.net/post/11069853))
 - Additional suggestions welcome
 
 # Drawbacks
