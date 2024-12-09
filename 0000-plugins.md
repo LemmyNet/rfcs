@@ -125,6 +125,11 @@ These can mainly serve as proof of concept, and as examples which can be modifie
 - Reject comments from specific user IDs (like [!santabot@slrpnk.net](https://slrpnk.net/post/11069853))
 - Additional suggestions welcome
 
+
+## Plugin Licensing
+
+Plugins can use any license chosen by the developer, including proprietary. This ensures that plugins can integrate with proprietary libaries, for example Android/iOS push notifications.
+
 # Drawbacks
 
 Plugins may have a negative impact on Lemmy's performance. It is up to plugin developers and instance admins to ensure that plugins run adequately. In any case plugins are only called for POST actions but not for GET. This means slow plugins might result in longer waiting time to submit posts, but passive browsing will be unaffected.
@@ -153,3 +158,5 @@ We may also consider to move some existing features into plugins. This applies t
 - Slur filter
 - Custom emojis
 - Taglines
+
+In the opposite way, popular plugins may be shipped as part of Lemmy releases, or reimplemented as part of Lemmy core.
