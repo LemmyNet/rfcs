@@ -128,7 +128,7 @@ These can mainly serve as proof of concept, and as examples which can be modifie
 
 ## Plugin Licensing
 
-Plugins can use any license chosen by the developer, including proprietary. This ensures that plugins can integrate with proprietary libaries, for example Android/iOS push notifications.
+Plugins can use any [OSI-approved open source licenses](https://opensource.org/licenses). Unlike Lemmy's AGPL license, most of them don't require sharing the source code with people who use it over a network, so the source code only needs to be made available to server admins. 
 
 # Drawbacks
 
