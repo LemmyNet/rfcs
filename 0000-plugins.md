@@ -140,7 +140,12 @@ TODO
 
 # Prior art
 
-TODO
+Plugins for other Fediverse platforms, all based on PHP:
+
+- https://github.com/friendica/friendica-addons
+- https://codeberg.org/hubzilla/hubzilla-addons
+- https://nextcloud.github.io/news/features/plugins/
+- https://developer.wordpress.org/plugins/
 
 # Unresolved questions
 
