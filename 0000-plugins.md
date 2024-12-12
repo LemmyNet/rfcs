@@ -19,6 +19,8 @@ TODO
 
 # Reference-level explanation
 
+Plugins are loaded from `./plugins/*.wasm` at startup. The endpoint `/api/v4/site` gets a new field `active_plugins`.
+
 ## Plugin Hooks
 
 Lemmy will have to add hooks for specific actions, which can then be used by plugins. In general there are two types of hooks: before an action is written to the database, so it can be rejected or altered. And after it is written to the database, mainly for different types of notifications.
@@ -128,7 +130,7 @@ These can mainly serve as proof of concept, and as examples which can be modifie
 
 ## Plugin Licensing
 
-Plugins can use any [OSI-approved open source licenses](https://opensource.org/licenses). Unlike Lemmy's AGPL license, most of them don't require sharing the source code with people who use it over a network, so the source code only needs to be made available to server admins. 
+Plugins can use any [OSI-approved open source licenses](https://opensource.org/licenses). Unlike Lemmy's AGPL license, most of them don't require sharing the source code with people who use it over a network, so the source code only needs to be made available to server admins. This also allows for for paid plugins.
 
 # Drawbacks
 
