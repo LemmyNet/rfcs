@@ -5,11 +5,11 @@
 
 # Summary
 
-Plugins will make Lemmy more flexible, and allow implementing features which are too niche for merging into Lemmy core. It will allow Lemmy to focus on core features, while allowing outside developers to contribute new features without using Rust.
+Implement a plugin system for Lemmy based on Webassembly.
 
 # Motivation
 
-TODO
+Plugins will make Lemmy more flexible, and allow implementing features which are too niche for merging into Lemmy core. It will allow Lemmy to focus on core features, while allowing outside developers to contribute new features without using Rust.
 
 # Guide-level explanation
 
