@@ -86,7 +86,7 @@ func my_plugin() int32 {
 	}
 	if strings.Contains(params.Body, "Java") {
 		// Throw error to reject post
-		pdk.SetError("We dont talk about Java)
+		pdk.SetError("We dont talk about Java")
 		return 1
 	}
 	params.Body = strings.Replace(params.Body, "Rust", "Go", -1);
