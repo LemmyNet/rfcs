@@ -19,7 +19,9 @@ Plugins will make Lemmy more flexible, and allow implementing features which are
 
 # Reference-level explanation
 
-Plugins are loaded from `./plugins/*.wasm` at startup. The endpoint `/api/v4/site` gets a new field `active_plugins`.
+## File Structure
+
+Each plugin consists of two files, `my_plugin.wasm` for the code and `my_plugin.json` for metadata. The metadata consists of `url` (repository or website link), name and short description. Plugins are loaded from `./plugins/` at startup. The names and metadata for all active plugins are exposed under `/api/v4/site` with a new field `active_plugins`.
 
 ## Plugin Hooks
 
