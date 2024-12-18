@@ -21,13 +21,13 @@ Plugins will make Lemmy more flexible, and allow implementing features which are
 
 ## File Structure
 
-Each plugin consists of two files, `my_plugin.wasm` for the code and `my_plugin.json` for metadata. The metadata consists of `url` (repository or website link), name and short description. Plugins are loaded from `./plugins/` at startup. The names and metadata for all active plugins are exposed under `/api/v4/site` with a new field `active_plugins`.
+Each plugin consists of two files, `my_plugin.wasm` for the code and `my_plugin.json` for metadata. The metadata consists of `url` (repository or website link), `name` and `short description`. Plugins are loaded from `./plugins/` at startup. The names and metadata for all active plugins are exposed under `/api/v4/site` with a new field `active_plugins`.
 
 ## Plugin Hooks
 
 Lemmy will have to add hooks for specific actions, which can then be used by plugins. In general there are two types of hooks: before an action is written to the database, so it can be rejected or altered. And after it is written to the database, mainly for different types of notifications.
 
-Data is passed to plugins using the existing structs linked below, serialized to JSON.
+Data is passed to plugins using the existing structs linked below, serialized to JSON. Additionally plugins can retrieve [config values](https://github.com/extism/go-pdk?tab=readme-ov-file#configs) `lemmy_version` (e.g. `0.19.8`) and `lemmy_url` (e.g. `http://localhost:8536`), in order to retrieve data or perform further actions via Lemmy API.
 
 For the initial implementation, the following hooks will be available:
 
@@ -104,18 +104,6 @@ func my_plugin() int32 {
 func main() {}
 ```
 
-## Host Functions
-
-Plugins will need access to the Lemmy database for various reasons, such as determining which instance a new post is coming from, or storing custom data. The easiest way to do this would be direct database access for plugins, but this has many problems:
-- Database schema changes across Lemmy versions, which would make it very difficult to make plugins compatible with new Lemmy versions, and prevent instances from upgrading
-- Plugins could accidentally delete data or break the database
-
-As such we need to use a different approach, by exposting specific database calls from Lemmy via [host functions](https://extism.org/docs/concepts/host-functions). For the beginning the following functions will be exposed:
-
-- Instance::read_or_create 
-
-More functions may be added if they are needed for the initial plugins.
-
 ## Initial Plugins
 
 These can mainly serve as proof of concept, and as examples which can be modified by plugin developers. Include integration tests to ensure that functionality works with new Lemmy changes. These plugins should be written in a variety of languages, and live in a separate repo `lemmy-plugin-examples`.
@@ -136,7 +124,10 @@ Plugins can use any [OSI-approved open source licenses](https://opensource.org/l
 
 # Drawbacks
 
-Plugins may have a negative impact on Lemmy's performance. It is up to plugin developers and instance admins to ensure that plugins run adequately. In any case plugins are only called for POST actions but not for GET. This means slow plugins might result in longer waiting time to submit posts, but passive browsing will be unaffected.
+Whenever a plugin hook is called, Lemmy blocks the API call until the plugin returns. This means that slow plugins can result in slow API actions for users, or delays for incoming federation. To avoid such problems, plugin developers should optimize their code to return as fast as possible, and perform expensive operations or network calls in a background thread. It is up to plugin developers and instance admins to ensure that plugins run adequately. Developers should attempt to optimize plugins to
+
+
+In any case plugins are only called for POST actions but not for GET. This means slow plugins might result in longer waiting time to submit posts, but passive browsing will be unaffected.
 
 # Rationale and alternatives
 
