@@ -25,7 +25,9 @@ Each plugin consists of two files, `my_plugin.wasm` for the code and `my_plugin.
 
 ## Plugin Hooks
 
-Lemmy will have to add hooks for specific actions, which can then be used by plugins. In general there are two types of hooks: before an action is written to the database, so it can be rejected or altered. And after it is written to the database, mainly for different types of notifications.
+Lemmy will have hooks for specific actions which can then be used by plugins. In general there are two types of hooks: before an action is written to the database, so it can be rejected or altered. And after it is written to the database, mainly for different types of notifications.
+
+Whenever a plugin hook is called, Lemmy blocks the API call until the plugin returns. This means that slow plugins can result in slow API actions for users, or delays for incoming federation. To avoid such problems, plugin developers should optimize their code to return as fast as possible, and perform expensive operations or network calls in a background thread.
 
 Data is passed to plugins using the existing structs linked below, serialized to JSON. Additionally plugins can retrieve [config values](https://github.com/extism/go-pdk?tab=readme-ov-file#configs) `lemmy_version` (e.g. `0.19.8`) and `lemmy_url` (e.g. `http://localhost:8536`), in order to retrieve data or perform further actions via Lemmy API.
 
@@ -36,30 +38,30 @@ For the initial implementation, the following hooks will be available:
 These hooks can be used to reject or alter user actions based on different criteria.
 
 - Post
-    - [create_local_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L67)
-    - [update_local_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L98)
-    - [receive_federated_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L67)
-    - [post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L171)
+  - [create_local_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L67)
+  - [update_local_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L98)
+  - [receive_federated_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L67)
+  - [post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L171)
 - Comment
-    - [create_local_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L59)
-    - [update_local_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L84)
-    - [receive_federated_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L59)
-    - [post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L119)
+  - [create_local_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L59)
+  - [update_local_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L84)
+  - [receive_federated_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L59)
+  - [post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L119)
 
 ### After writing to Database
 
 These are mainly useful to generate notifications.
 
 - Post
-	- [new_post](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L19)
-	- [new_post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L157)
+  - [new_post](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L19)
+  - [new_post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L157)
 - Comment
-	- [new_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L27)
-	- [new_comment_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L105)
+  - [new_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L27)
+  - [new_comment_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L105)
 
 ## Example
 
-Below is a simple Go plugin which uses the `create_local_post` hook to replace `Rust` in post body with `Go`, and reject posts which mention `Java`. 
+Below is a simple Go plugin which uses the `create_local_post` hook to replace `Rust` in post body with `Go`, and reject posts which mention `Java`.
 
 Also checkout the documentation for Extism's [Go Plugin Development Kit](https://github.com/extism/go-pdk).
 
@@ -117,26 +119,23 @@ These can mainly serve as proof of concept, and as examples which can be modifie
 - Reject comments from specific user IDs (like [!santabot@slrpnk.net](https://slrpnk.net/post/11069853))
 - Additional suggestions welcome
 
-
-## Plugin Licensing
+## Licensing
 
 Plugins can use any [OSI-approved open source licenses](https://opensource.org/licenses). Unlike Lemmy's AGPL license, most of them don't require sharing the source code with people who use it over a network, so the source code only needs to be made available to server admins. This also allows for for paid plugins.
 
 # Drawbacks
 
-Whenever a plugin hook is called, Lemmy blocks the API call until the plugin returns. This means that slow plugins can result in slow API actions for users, or delays for incoming federation. To avoid such problems, plugin developers should optimize their code to return as fast as possible, and perform expensive operations or network calls in a background thread. It is up to plugin developers and instance admins to ensure that plugins run adequately. Developers should attempt to optimize plugins to
-
-
-In any case plugins are only called for POST actions but not for GET. This means slow plugins might result in longer waiting time to submit posts, but passive browsing will be unaffected.
+Plugins may have a performance impact as described above. It is up to plugin developers and instance admins to ensure that plugins run adequately. In any case plugins are only called for POST actions but not for GET. This means slow plugins might result in longer waiting time to submit posts, but passive browsing will be unaffected.
 
 # Rationale and alternatives
 
-TODO
+The alternative would be to implement all possible functionality directly in the Lemmy backend. This is not always desirable because features may only be desired by a small fraction of users. Additionally Lemmy code can only be written in Rust, while plugins can use many different languages.
 
 # Prior art
 
-Plugins for other Fediverse platforms, all based on PHP:
+Plugins for other Fediverse platforms:
 
+- https://docs.joinpeertube.org/contribute/plugins
 - https://github.com/friendica/friendica-addons
 - https://codeberg.org/hubzilla/hubzilla-addons
 - https://nextcloud.github.io/news/features/plugins/
@@ -144,17 +143,14 @@ Plugins for other Fediverse platforms, all based on PHP:
 
 # Unresolved questions
 
-What are the licensing requirements for plugins, if any? Are proprietary plugins allowed or do they need to be under AGPL like Lemmy? May have to ask Extism maintainers about legal conditions.
-
 # Future possibilities
 
-In the future we can add hooks for other user actions, as well as additional host functions.
-
-We could also support implementing new post ranking algorithms in plugins.
+In the future we can add hooks for other user actions, such as voting or uploading images. We could also support implementing new post ranking algorithms in plugins.
 
 Additionally it should be possible for plugins to define new API routes for additional functionality.
 
 We may also consider to move some existing features into plugins. This applies to features which are mostly separate from core functionality, and which are only used by few instances. For example:
+
 - Slur filter
 - Custom emojis
 - Taglines
