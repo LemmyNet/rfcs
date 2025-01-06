@@ -35,13 +35,40 @@ Remote procedure call (RPC) APIs are APIs for running functions on a remote serv
 
 ### What's REST?
 
-REST APIs are web APIs that conform to the [REST architectural style described in Roy Fielding's doctoral dissertation](https://ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation.pdf). The principles of this architectural style I think are most useful for Lemmy will be highlighted in the section examining why Lemmy's API should be more RESTful than RPC-like.
+REST APIs are web APIs that conform to REST architectural principles, which are ([copying from a redhat article](https://www.redhat.com/en/topics/api/what-is-a-rest-api)):
+
+- A client-server architecture made up of clients, servers, and resources, with requests managed through HTTP.
+- Stateless client-server communication, meaning no client information is stored between get requests and each request is separate and unconnected.
+- Cacheable data that streamlines client-server interactions.
+- A uniform interface between components so that information is transferred in a standard form. This requires that:
+  - resources requested are identifiable and separate from the representations sent to the client.
+  - resources can be manipulated by the client via the representation they receive because the representation contains enough information to do so.
+  - self-descriptive messages returned to the client have enough information to describe how the client should process it.
+  - hypertext/hypermedia is available, meaning that after accessing a resource the client should be able to use hyperlinks to find all other currently available actions they can take.
+- A layered system that organizes each type of server (those responsible for security, load-balancing, etc.) involved the retrieval of requested information into hierarchies, invisible to the client.
+- Code-on-demand (optional): the ability to send executable code from the server to the client when requested, extending client functionality.
+
+Some of these principles are more relevant to our use-case than others: for instance, it's already given that we're using a client-server architecture, and code-on-demand doesn't fit into our use-case at all.
 
 ### How is Lemmy's API RPC-like?
 
-In both the [v3 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v3.rs) and current state of the [v4 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v4.rs) (as of January 2, 2025) operations that aren't creating, reading, and updating certain types of content all have URLs that correspond to actions instead of resources, e.g. locking a post, creating a report, and logging in. TODO - finish this thought
+In both the [v3 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v3.rs) and current state of the [v4 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v4.rs) (as of January 2, 2025) operations that aren't creating, reading, and updating certain types of content all have URLs that correspond to actions instead of resources, e.g. locking a post, creating a report, and logging in. Further, unique resources are rarely identified by URL, typically being retrieved by passing a query parameter with a specific ID (e.g. GET /post?id=123).
+
+### Why RESTful?
+
+One major reason to make the API more RESTful is that Lemmy's domain lends itself well to being modeled as resources. Some resources in the domain are:
+
+- posts
+- comments
+- users
+- communities
+- federated instances
+- direct messages
+
+All of these resources act as nouns. By having the routes for endpoints focused on nouns (and, in some cases, adjectives), we can lean on HTTP verbs to show which action is being taken on a resource. We can also better describe errors by being more mindful of which HTTP status codes we return.
 
 <!-- This is the technical portion of the RFC. Explain the design in sufficient detail that:
+
 
 - Its interaction with other features is clear.
 - It is reasonably clear how the feature would be implemented.
