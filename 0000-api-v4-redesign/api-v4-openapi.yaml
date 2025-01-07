@@ -1,0 +1,2977 @@
+openapi: 3.0.0
+info:
+  title: Lemmy
+  version: 1.0.0
+  contact: {}
+paths:
+  /communities:
+    get:
+      summary: Get list of communities of an instance
+      description: ""
+      parameters: []
+      operationId: listAllCommunities
+      responses:
+        "200":
+          description: Description
+        default:
+          description: Default response
+      tags:
+        - Communities
+    post:
+      summary: Create a community
+      description: ""
+      parameters: []
+      operationId: createCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+  /communities/random:
+    get:
+      summary: Retrieve a random community.
+      description: ""
+      parameters: []
+      operationId: getRandomCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+  "/communities/{communityId}":
+    get:
+      summary: Get information about a specific community.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the community to retrieve.
+      operationId: getCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+    delete:
+      summary: Delete a given community.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the community to delete.
+      operationId: deleteCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the community to update.
+      operationId: updateCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+  "/communities/{communityId}/posts":
+    get:
+      summary: Get posts for a specific community.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Community from which to fetch posts.
+      operationId: listPostsFromCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Communities
+    post:
+      summary: Create a post.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the community to post to.
+      operationId: createPost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Communities
+  "/communities/{communityId}/posts/featured":
+    get:
+      summary: List all of the posts that are featured for a given community.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the community to fetch featured posts from.
+      operationId: listFeaturedPostsFromCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Posts
+  "/communities/{communityId}/posts/featured/{postId}":
+    put:
+      summary: Marks a given post as featured for a given community.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the community to feature the post in.
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            Unique ID of the post to feature in a given community. Post must
+            come from the community it is being featured in.
+      operationId: featurePostInCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Communities
+        - Moderation
+    delete:
+      summary: Remove a given post from list of a given community's featured posts.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the community to unfeature a post from.
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            Unique ID of the post to unfeature from a given community. Post must
+            be from to community it is being unfeatured from.
+      operationId: unfeaturePostInCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Communities
+        - Moderation
+  "/communities/{communityId}/moderators":
+    get:
+      summary: List the moderation team of the specified community.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the community to list the moderators of.
+      operationId: listModeratorsForCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Moderation
+        - Users
+        - Communities
+  "/commmunities/{communityId}/users/{personId}/transfer-ownership":
+    post:
+      summary: Make someone else the top mod of a given community.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the community to transfer ownership of.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            Unique ID of the user to transfer control of the community to. User
+            must already be a mod of the community.
+      operationId: transfer_community_ownership
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Users
+        - Moderation
+  "/communities/{communityId}/users/{personId}/appoint-moderator":
+    post:
+      summary: Add a user to a community's moderation team.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the community to appoint moderator of.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            Unique ID of the person being appointed as moderator of the
+            community.
+      operationId: appoint_community_moderator
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Users
+        - Moderation
+  /posts:
+    get:
+      summary: List all posts.
+      description: ""
+      parameters: []
+      operationId: listAllPosts
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+  "/posts/{postId}":
+    get:
+      summary: Get a specific post.
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the post to retrieve.
+      operationId: getPost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+    delete:
+      summary: Delete a given post.
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the post to delete.
+      operationId: deletePost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+    put:
+      summary: Update an already created post.
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the post to update.
+      operationId: updatePost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+  "/posts/{postId}/comments":
+    get:
+      summary: List comments for a given post
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the post to retrieve comments from.
+      operationId: listCommentsFromPost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Posts
+    post:
+      summary: Create a top level comment on a post.
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to comment on.
+      operationId: createCommentForPost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Posts
+  "/post/{postId}/reports":
+    get:
+      summary: List all of the reports users made on a post.
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to list the reports of.
+      operationId: listPostReports
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Moderation
+  /me:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: getCurrentUser
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Users
+    delete:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: deleteCurrentUserAccount
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Users
+  /me/sessions:
+    post:
+      summary: Creates a new session (i.e. logs in).
+      description: ""
+      parameters: []
+      operationId: login
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Sessions
+        - Current User
+    get:
+      summary: List all sessions for the currently logged in user.
+      description: ""
+      parameters: []
+      operationId: listSessions
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Sessions
+        - Current User
+  "/me/sessions/{sessionId}":
+    delete:
+      summary: >-
+        Remove a session (possibly current session, possibly session on another
+        device)
+      description: ""
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the session to delete.
+      operationId: deleteSession
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Sessions
+  /me/sessions/current:
+    delete:
+      summary: Delete current session.
+      description: ""
+      parameters: []
+      operationId: logout
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Sessions
+        - Current User
+    get:
+      summary: Get the session information of the currently logged in user
+      description: ""
+      parameters: []
+      operationId: getCurrentSession
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Sessions
+        - Current User
+  /me/settings:
+    get:
+      summary: Get the settings for the account of the currently logged in user.
+      description: ""
+      parameters: []
+      operationId: getAccountSettings
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Settings
+    put:
+      summary: Update the settings of the currently logged in user.
+      description: ""
+      parameters: []
+      operationId: updateAccountSettings
+      responses:
+        default:
+          description: Default response
+      tag:
+        - Current User
+        - Settings
+  /me/settings/backup:
+    put:
+      summary: Import settings from an account on another instance.
+      description: ""
+      parameters: []
+      operationId: importAccountSettings
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Settings
+    get:
+      summary: >-
+        Get the parts of the settings of the currently logged in user that can
+        be backed up.
+      description: ""
+      parameters: []
+      operationId: exportAccountSettings
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Settings
+  /me/media:
+    get:
+      summary: Get media for the currently logged in user.
+      description: ""
+      parameters: []
+      operationId: listCurrentUserMedia
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Media
+  /me/mentions:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listCurrentUserMentions
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+  /me/blocked/users:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listBlockedUsers
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Users
+        - Blocks
+  "/me/blocked/users/{personId}":
+    put:
+      summary: Block a user
+      description: ""
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the user to block.
+      operationId: blockUser
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Users
+        - Blocks
+    delete:
+      summary: Remove user from blocklist
+      description: ""
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person to unblock.
+      operationId: unblockUser
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Users
+        - Blocks
+  /me/blocked/communities:
+    get:
+      summary: List communities blocked by the current user
+      description: ""
+      parameters: []
+      operationId: listBlockedCommunities
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Communities
+        - Blocks
+  "/me/blocked/communities/{communityId}":
+    put:
+      summary: Block community for current user.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to block.
+      operationId: blockCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Communities
+        - Blocks
+    delete:
+      summary: Stop blocking the community.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to block.
+      operationId: unblockCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Communities
+        - Blocks
+  /me/blocked/instances:
+    get:
+      summary: List instances blocked by the currently logged in user.
+      description: ""
+      parameters: []
+      operationId: listBlockedInstances
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Instances
+        - Blocks
+  "/me/blocked/instances/{instanceId}":
+    put:
+      summary: Block an instance for the current user.
+      description: ""
+      parameters:
+        - name: instanceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the instance to block.
+      operationId: blockInstance
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Instances
+        - Blocks
+    delete:
+      summary: Stop blocking the instance for the current user.
+      description: ""
+      parameters:
+        - name: instanceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the instance to unblock.
+      operationId: unblockInstance
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Instances
+        - Blocks
+  /me/saved/posts:
+    get:
+      summary: List the favorite posts of the logged in user.
+      description: ""
+      parameters: []
+      operationId: listFavoritePosts
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Posts
+        - Saved
+  "/me/saved/posts/{postId}":
+    get:
+      summary: Mark a post as a favorite for the current user.
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of post to save.
+      operationId: savePost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Posts
+        - Saved
+    delete:
+      summary: Unmark a post as favorite for the current user
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of post to unsave.
+      operationId: unsavePost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Posts
+        - Saved
+  /me/saved/comments:
+    get:
+      summary: List comments favorited by the currently logged in user
+      description: ""
+      parameters: []
+      operationId: listFavoriteComments
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Comments
+        - Saved
+  "/me/saved/comments/{commentId}":
+    put:
+      summary: Mark a comment as favorite for the current user.
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of comment to save.
+      operationId: saveComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Comments
+        - Saved
+    delete:
+      summary: Unmark a comment as favorite.
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of comment to unsave.
+      operationId: unsaveComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Comments
+        - Saved
+  /me/saved:
+    get:
+      summary: List all favorites for currently logged in user.
+      description: ""
+      parameters: []
+      operationId: listSaved
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Saved
+  /me/hidden/posts:
+    get:
+      summary: List posts hidden by current user.
+      description: ""
+      parameters: []
+      operationId: listHiddenPosts
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Hidden
+        - Posts
+  "/me/hidden/posts/{postId}":
+    put:
+      summary: Hide a post.
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of post to hide.
+      operationId: hidePost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Hidden
+        - Posts
+    delete:
+      summary: Unhide post.
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to unhide.
+      operationId: unhidePost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Hidden
+        - Posts
+  /me/subscriptions/communities:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listSubscribedCommunities
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Communities
+        - Subscriptions
+  "/me/subscriptions/communities/{communityId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to subscribe to.
+      operationId: subscribeToCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Communities
+        - Subscriptions
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to unsubscribe from.
+      operationId: unsibscribeFromCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Communities
+        - Subscriptions
+  /site:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: getSite
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+    put:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: updateOrInitializeSite
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  /site/taglines:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listTaglines
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+    post:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: createTagline
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  /site/taglines/random:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: getRandomTagline
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  "/site/taglines/{taglineId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: taglineId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the tagline to update.
+      operationId: updateTagline
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: taglineId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the tagline to delete.
+      operationId: deleteTagline
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  /site/custom-emojis:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listCustomEmojis
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+    post:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: createCustomEmoji
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  "/site/custom-emojis/{emojiId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: emojiId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the emoji to update
+      operationId: updateCustomEmoji
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: emojiId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the emoji to delete.
+      operationId: deleteCustomEmoji
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  /site/oauth-providers:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listOAuthProviders
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+    post:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: addOAuthProvider
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  "/site/oauth-providers/{providerId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: providerId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the OAuth provider to update.
+      operationId: updateOAuthProvider
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: providerId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the OAuth provider to delete.
+      operationId: deleteOAuthProvider
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  "/communities/{communityId}/bans":
+    get:
+      summary: List users banned from a given community
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to list the bans for.
+      operationId: listUsersBannedFromCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Moderation
+        - Users
+        - Communities
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to ban a user from.
+      operationId: banUserFromCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Moderation
+        - Users
+        - Communities
+  "/communities/{communityId}/bans/{personId}/unban":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to unban the user from.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person to unban from the community.
+      operationId: unbanUserFromCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Moderation
+        - Users
+        - Communities
+  /instances:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listFederatedInstances
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Instances
+  /instances/allowed:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listAllowedInstances
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Instances
+  "/instances/allowed/{instanceId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: instanceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the instance to allow.
+      operationId: addOrUpdateAllowedInstance
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Instances
+        - Administration
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: instanceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the instance to unallow.
+      operationId: deleteAllowedInstance
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Instances
+        - Administration
+  /instances/blocked:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listBlockedInstances
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Instances
+  "/instances/blocked/{instanceId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: instanceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the instance to unblock.
+      operationId: unblockInstance
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Instances
+        - Administration
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: instanceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the instance to block.
+      operationId: addOrUpdateBlockedInstance
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Instances
+        - Administration
+  /communities/hidden:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listHiddenCommunities
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Administration
+        - Hidden
+  "/communities/hidden/{communityId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to hide.
+      operationId: hideCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Administration
+        - Hidden
+  /communities/suspended:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listSuspendedCommunities
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Administration
+        - Moderation
+  "/communities/suspended/{communityId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to suspend.
+      operationId: suspendCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Administration
+        - Moderation
+  "/communities/suspended/{communityId}/reinstate":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to reinstate.
+      operationId: reinstateCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Administration
+        - Moderation
+  "/communities/hidden/{communityId}/unhide":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to unhide.
+      operationId: unhideCommunities
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Administration
+  /posts/suspended:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listSuspendedPosts
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Moderation
+        - Administration
+  "/posts/suspended/{postId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to suspend.
+      operationId: suspendPost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Moderation
+        - Administration
+  "/post/suspended/{postId}/reinstate":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to reinstate.
+      operationId: reinstatePost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Moderation
+        - Administration
+  /me/read/posts:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listReadPosts
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Current User
+    patch:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: markMultiplePostsAsRead
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Current User
+  "/me/read/posts/{postId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to mark as read.
+      operationId: markPostAsRead
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Current User
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to unmark as read.
+      operationId: unmarkPostAsRead
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Current User
+  /posts/locked:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listLockedPosts
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+  "/posts/locked/{postId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of post to unlock.
+      operationId: unlockPost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Moderation
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to lock.
+      operationId: lockPost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Moderation
+  "/post/{postId}/votes":
+    get:
+      summary: List who voted on a post and their respective votes.
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to list the votes on.
+      operationId: listPostVotes
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Moderation
+        - Voting
+  "/post/{postId}/votes/{personId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to unvote.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person unvoting.
+      operationId: unvotePost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Voting
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to vote on.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person voting on the post.
+      operationId: votePost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Voting
+  "/post/{postId}/reports/{personId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to resolve the report on.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person who reported the post.
+      operationId: resolveReport
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Moderation
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to report.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person making the report.
+      operationId: createOrUpdateReport
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Moderation
+  /metadata:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: getUrlMetadata
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+  /comments:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listComments
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+  "/comments/{commentId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to delete.
+      operationId: deleteComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to retrieve.
+      operationId: updateComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+  /comments/suspended:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listSuspendedComments
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Moderation
+  "/comments/suspended/{commentId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to suspend.
+      operationId: suspendComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Moderation
+  "/comments/suspended/{commentId}/reinstate":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to reinstate.
+      operationId: reinstateComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Moderation
+  "/me/read/comments/{commentId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to mark as read.
+      operationId: markCommentAsRead
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Comments
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to unmark as read.
+      operationId: unmarkCommentAsRead
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Comments
+  "/comments/pinned/{commentId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to unpin.
+      operationId: unpinComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Moderation
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to pin.
+      operationId: pinComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Moderation
+  "/comments/{commentId}/votes":
+    get:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to list the votes on.
+      operationId: listCommentVotes
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Moderation
+        - Comments
+        - Voting
+  "/comments/{commentId}/votes/{personId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to unvote.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person unvoting the comment.
+      operationId: unvoteComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Voting
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to vote on.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person voting on the comment.
+      operationId: voteComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Voting
+  "/comments/{commentId}/reports":
+    get:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to list reports of.
+      operationId: listCommentReports
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Moderation
+  "/comments/{commentId}/reports/{personId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to resolve the report on.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person who created the report.
+      operationId: resolveCommentReport
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Moderation
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to report.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person reporting the comment.
+      operationId: reportComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Moderation
+  "/comments/{commentId}/replies":
+    get:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to list replies to.
+      operationId: listCommentReplies
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to reply to.
+      operationId: replyToComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+  /direct-messages:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listDirectMessages
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Direct Messages
+  /users:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listUsers
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Users
+    post:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: registerUser
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Users
+  "/users/{personId}":
+    get:
+      summary: ""
+      description: ""
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person to retrieve.
+      operationId: getUser
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Users
+  "/users/{personId}/direct-messages":
+    get:
+      summary: ""
+      description: ""
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person to list direct messages from.
+      operationId: listDirectMessagesFromPerson
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Users
+        - Direct Messages
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person to send a direct message to.
+      operationId: sendDirectMessage
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Users
+        - Direct Messages
+  "/direct-messages/{messageId}":
+    get:
+      summary: ""
+      description: ""
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the message to retrieve.
+      operationId: getDirectMessage
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Direct Messages
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the message to delete.
+      operationId: deleteDirectMessage
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Direct Messages
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the message to update.
+      operationId: updateDirectMessage
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Direct Messages
+  /me/read/direct-messages:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listReadDirectMessages
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Direct Messages
+  "/me/read/direct-messages/{messageId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the message to mark as unread.
+      operationId: unmarkDirectMessageAsRead
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Direct Messages
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of message to mark as read.
+      operationId: markDirectMessageAsRead
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Direct Messages
+  /direct-messages/suspended:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listSuspendedDirectMessages
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Direct Messages
+        - Moderation
+  "/direct-messages/{messageId}/reports":
+    get:
+      summary: ""
+      description: ""
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the message to list reports on.
+      operationId: listReportsForDirectMessage
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Direct Messages
+        - Moderation
+  "/direct-messages/{messageId}/reports/{personId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the message to resolve the report on.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person who created the report.
+      operationId: resolveDirectMessageReport
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Direct Messages
+        - Moderation
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the message to report.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the current user.
+      operationId: reportDirectMessage
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Direct Messages
+        - Moderation
+  /reports:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listReports
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Moderation
+  /me/password:
+    put:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: changePassword
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+  /me/password/send-reset-email:
+    post:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: sendPasswordResetEmail
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+  /me/password/reset:
+    post:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: resetPassword
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+  /captcha:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: getCaptcha
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Auth
+  /one-time-password:
+    put:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: enableTotp
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Auth
+    delete:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: disableTotp
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Auth
+  /one-time-password/new:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: generateTotpSecret
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Auth
+  /email/verify:
+    post:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: verifyEmail
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Auth
+  /site/media:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listSiteMedia
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Media
+        - Administration
+  /me/read/comments:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listReadComments
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Current User
+  /me/replies:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listCurrentUserReplies
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+  /me/mentions/read:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listReadMentions
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+    patch:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: markMultipleMentionsAsRead
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+  "/me/mentions/read/{mentionId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: mentionId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the mention to unmark as read.
+      operationId: unmarkMentionAsRead
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: mentionId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the mention to mark as read.
+      operationId: markMentionAsRead
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+  /reports/unresolved:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listUnresolvedReports
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Moderation
+  /reports/unresolved/count:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: getNumberOfUnresolvedReports
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Moderation
+        - Counts
+  /me/notifications:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listNotifications
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+  /me/notifications/unread:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listUnreadNotifications
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+  /me/notifications/unread/count:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: getNumberOfUnreadNotifications
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Counts
+  "/site/admins/{personId}":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person to remove from the admin team.
+      operationId: removeAdmin
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person to add to the admin team.
+      operationId: addAdmin
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  /site/registration-applications:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listRegistrationApplications
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  /site/registration-applications/count:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: getNumberOfRegistrationApplications
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+        - Counts
+  "/site/registration-applications/{applicationId}/approve":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the registration application to approve.
+      operationId: approveRegistrationApplication
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  "/site/registration-applications/{applicationId}/deny":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the application to deny.
+      operationId: denyRegistrationApplication
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  "/posts/{postId}/purge":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to purge.
+      operationId: purgePost
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Administration
+        - Moderation
+  "/comments/{commentId}/purge":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the comment to purge.
+      operationId: purgeComment
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Comments
+        - Administration
+        - Moderation
+  "/communities/{communityId}/purge":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to purge.
+      operationId: purgeCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Administration
+        - Moderation
+  "/users/{userId}/purge":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the user to purge.
+      operationId: purgeUser
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Users
+        - Administration
+        - Moderation
+  /site/users/banned:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listBannedUsers
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Users
+        - Moderation
+        - Administration
+  "/site/users/banned/{personId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person to ban from the site.
+      operationId: banUserFromSite
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Users
+        - Moderation
+        - Administration
+  "/site/users/banned/{personId}/unban":
+    post:
+      summary: ""
+      description: ""
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person to unban from the site.
+      operationId: unbanUserFromSite
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Users
+        - Administration
+        - Moderation
+  /site/admins/me:
+    delete:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: leaveAdminTeam
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  /oauth/authenticate:
+    post:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: authenticateWithOAuth
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Auth
+  /site/icon:
+    put:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: setSiteIcon
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+    delete:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: deleteSiteIcon
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  /site/banner:
+    put:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: setSiteBanner
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+    delete:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: deleteSiteBanner
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Administration
+  "/communities/{communityId}/icon":
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to delete the ID of.
+      operationId: deleteCommunityIcon
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Moderation
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to set the icon of.
+      operationId: setCommunityIcon
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Moderation
+  /me/avatar:
+    delete:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: deleteCurrentUserAvatar
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Media
+    put:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: setCurrentUserAvatar
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Current User
+        - Media
+  /media:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listSiteMedia
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Media
+        - Administration
+    post:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: uploadMedia
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Media
+  /media/proxy:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: getProxiedMedia
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Media
+  "/media/{filename}":
+    get:
+      summary: ""
+      description: ""
+      parameters:
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Name of the file to retrieve.
+      operationId: getMediaFile
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Media
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Name of the media file to delete.
+      operationId: deleteMediaFile
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Media
+  /media/health:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: getMediaServerHealth
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Media
+  /moderation-actions:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listModerationActions
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Moderation
+  /search:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: search
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Posts
+        - Comments
+        - Users
+        - Communities
+  /posts/featured:
+    get:
+      summary: ""
+      description: ""
+      parameters: []
+      operationId: listFeaturedPosts
+      responses:
+        default:
+          description: Default response
+  "/posts/featured/{postId}":
+    put:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to feature.
+      operationId: featurePost
+      responses:
+        default:
+          description: Default response
+    delete:
+      summary: ""
+      description: ""
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the post to unfeature.
+      operationId: unfeaturePost
+      responses:
+        default:
+          description: Default response
+security: []
+servers: []
+components:
+  links: {}
+  callbacks: {}
+  schemas: {}
+  securitySchemes:
+    jwtBearerToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: Posts
+  - name: Communities
+  - name: Moderation
+  - name: Users
+  - name: Comments
+  - name: Current User
+  - name: Sessions
+  - name: Settings
+  - name: Media
+  - name: Blocks
+  - name: Instances
+  - name: Saved
+  - name: Administration
+  - name: Voting
+  - name: Direct Messages
+  - name: Auth
+  - name: Counts
