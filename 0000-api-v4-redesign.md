@@ -67,6 +67,63 @@ One major reason to make the API more RESTful is that Lemmy's domain lends itsel
 
 All of these resources act as nouns. By having the routes for endpoints focused on nouns (and, in some cases, adjectives), we can lean on HTTP verbs to show which action is being taken on a resource. We can also better describe errors by being more mindful of which HTTP status codes we return.
 
+## Resource Archetypes
+
+An understanding of REST resource archetypes will help in understanding the design decisions made in this RFC. There are 4 archetypes of resources: document, collection, store, and controller. The following 4 subsections are lifted from [_REST API Design Rulebook_ by Mark Masse](https://github.com/Dhinendran/studymaterial/blob/master/Book%20-%20O%27Reilly%20REST%20API%20Design%20Rulebook.pdf).
+
+### Document
+
+A document resource is a singular concept that is akin to an object instance or database record. A document’s state representation typically includes both _fields_ with values and _links_ to other related resources. With its fundamental field and link-based structure, the document type is the conceptual _base archetype_ of the other resource archetypes. In other words, the three other resource archetypes can be viewed as specializations of the document archetype.
+
+Each URI below identifies a document resource:
+
+```
+http://api.soccer.restapi.org/leagues/seattle
+http://api.soccer.restapi.org/leagues/seattle/teams/trebuchet
+http://api.soccer.restapi.org/leagues/seattle/teams/trebuchet/players/mike
+```
+
+A document may have child resources that represent its specific subordinate concepts. With its ability to bring many different resource types together under a single parent, a document is a logical candidate for a REST API’s root resource, which is also known as the _docroot_. The example URI below identifies the docroot, which is the Soccer REST API’s advertised entry point:
+
+```
+http://api.soccer.restapi.org
+```
+
+### Collection
+
+A collection resource is a server-managed _directory_ of resources. Clients may propose new resources to be added to a collection. However, it is up to the collection to choose to create a new resource, or not. A collection resource chooses what it wants to contain and also decides the URIs of each contained resource.
+
+Each URI below identifies a collection resource:
+
+```
+http://api.soccer.restapi.org/leagues
+http://api.soccer.restapi.org/leagues/seattle/teams
+http://api.soccer.restapi.org/leagues/seattle/teams/trebuchet/players
+```
+
+### Store
+
+A store is a client-managed resource repository. A store resource lets an API client put resources in, get them back out, and decide when to delete them. On their own, stores do not create new resources; therefore a store never generates new URIs. Instead, each stored resource has a URI that was chosen by a client when it was initially put into the store.
+
+The example interaction below shows a user (with ID _1234_) of a client program using a fictional Soccer REST API to insert a document resource named _alonso_ in his or her store of _favorites_:
+
+```
+PUT /users/1234/favorites/alonso
+```
+
+### Controller
+
+A controller resource models a procedural concept. Controller resources are like executable functions, with parameters and return values; inputs and outputs.
+
+Like a traditional web application’s use of HTML forms, a REST API relies on controller resources to perform application-specific actions that cannot be logically mapped to one of the standard methods (create, retrieve, update, and delete, also known as
+CRUD).
+
+Controller names typically appear as the last segment in a URI path, with no _child_ resources to follow them in the hierarchy. The example below shows a controller re- source that allows a client to resend an alert to a user:
+
+```
+POST /alerts/245743/resend
+```
+
 <!-- This is the technical portion of the RFC. Explain the design in sufficient detail that:
 
 
