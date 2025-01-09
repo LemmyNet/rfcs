@@ -124,20 +124,45 @@ Controller names typically appear as the last segment in a URI path, with no _ch
 POST /alerts/245743/resend
 ```
 
-<!-- This is the technical portion of the RFC. Explain the design in sufficient detail that:
+## Exploring the Proposed Endpoint Paths
 
+As stated in the guide-level explanation, an OpenAPI spec is included in this RFC in YAML form. It is much easier to explore using a OpenAPI editor like [Swagger Editor](https://editor.swagger.io/).
 
-- Its interaction with other features is clear.
-- It is reasonably clear how the feature would be implemented.
-- Corner cases are dissected by example.
+### Plural vs Singular
 
-The section should return to the examples given in the previous section, and explain more fully how the detailed proposal makes those examples work.
+In API v3, most nouns are singular (e.g. `/post`, `/comment`, `/community`). The proposed API has many more plural nouns, almost always corresponding to collection resources (e.g. `/posts`, `/comments`, `/communities`). When a consumer of the API hits a pluralized endpoint with a GET request, they can be sure they will be getting back multiple results (assuming the specific endpoint supports GET). There are still some singular resources, such as `/me` and `/site`. Note that these have singular wording because they refer to unique resources, in this case the current user (as determined by the Authorization header) and site; both of those endpoints are document resources.
 
-In particular explain the following, if applicable:
+### Path Parameters
 
-- Which database changes are necessary?
-- How does the HTTP API change?
-- How does the new feature work over federation? Are there similar features in other Fediverse platforms which should be compatible? Also see the [federation docs](https://join-lemmy.org/docs/contributors/05-federation.html). -->
+When referring to an individual member of a collection, the ID of the resource is used as part of the URL path, e.g. `/posts/1234`. This is a way of referring to individual members of collections; it goes well with the plural nouns used in paths.
+
+### More Substantial Path Name Changes
+
+Some resources have had name changes that go beyond being made plural. One major change is that things that used to be done under `/account` now instead use `/me`. This is to make sure it's thought of as a resource; it refers to the currently logged in user. While `/account` is also a singular noun that could work as a resource name, I think the new path name makes it more obvious that the account being referred to is not just any account, but the account of the person making the request.
+
+One of the resources under `/me` of note is `/me/sessions`. This is used to handle logging in, logging out, and viewing all of the sessions of the currently logged in user.
+
+Some resources already more or less had names that are nouns also got names changes. One such change it calling private messages private messages `/direct-messages`. I replaced "private" with "direct" to better communicate that while these messages are sent directly to other users, they aren't private al a Matrix DMs. Another change is that what used to be referred to as "images" in the API is now "media". This change is partly to make it consistent with the list media endpoints from v3, and partly because it is technically also possible to upload non-images (like videos) with the old images endpoint. One more change is using the term "suspended" instead "remove" when referring to posts, comments, and communities that get taken down by moderators. This is because I wanted to make it clear that content that gets removed isn't necessarily removed permanently since mods can reinstate it. I'm not super happy with "suspended" and am open to ideas on alternatives.
+
+There were some other name changes to this effect, but the ones listed above are likely the most jarring ones.
+
+### PUT is Sometimes Used for Creation as well as Updates
+
+Some endpoints may seem odd at first glance because of this. Isn't PUT supposed to be used for updates? It is, but it can also be used for creating resources under certain circumstances. Recall the store resource archetype mentioned earlier: it says that URIs are chosen by the client instead of the server. What does this mean? An example will help make this clear.
+
+Take the path `/posts/locked/{postId}`. This uses PUT to lock a post, and DELETE to unlock a post. Note that the last part of the path is `postId`. `postId` is the ID of a post that already exists. In order to make the call, the client must already have the ID of a post in mind to lock. With this in mind, the PUT and DELETE operations on this endpoint can be though of more as a box that clients can put posts into and remove posts from.
+
+A major benefit of this approach is that it communicates that the operation is idempotent. A client could call `/posts/locked/1234` multiple times, and the effect would be the same as if they called it only a single time: lock a post if it's not already locked. Compare this to the v3 API, where locking a post requires POSTing to `/post/lock`. Even though the actual operation is idempotent, the POST method in HTTP is classified as not being idempotent; this results in some miscommunication about the API. PUT, on the other hand, is classified as being idempotent.
+
+### Rough Edges
+
+While I've done my best to make the API route design only use nouns (and perhaps adjectives for store archetypes), some actions the API supports required breaking this convention. The main offenders are moderation actions that include a reason both when performing and undoing something. For example, to ban a user, the a client must make a PUT request to `/site/users/banned/{personId}`; unbanning the user requires a POST request to `/site/users/banned/{personId}/unban`. I'm not particularly happy with the approach I picked for this, since it is inconsistent with how most of the rest of the API is designed. However, I considered an alternative that seems at least as bad.
+
+Bans and content suspensions could be treated as stores on their respective collections, and e.g. users could be added and removed from the ban list with `PUT /users/banned/{personId}` and `DELETE /users/banned/{personId}`, with the DELETE taking a request body with the unban reason. The problem with this approach is that DELETE requests with bodies can explained with [an excerpt from RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html#DELETE).
+
+> Although request message framing is independent of the method used, content received in a DELETE request has no generally defined semantics, cannot alter the meaning or target of the request, and might lead some implementations to reject the request and close the connection because of its potential as a request smuggling attack (Section 11.2 of [HTTP/1.1]). A client SHOULD NOT generate content in a DELETE request unless it is made directly to an origin server that has previously indicated, in or out of band, that such a request has a purpose and will be adequately supported. An origin server SHOULD NOT rely on private agreements to receive content, since participants in HTTP communication are often unaware of intermediaries along the request chain.
+
+Besides this, there are a few parts of the API that uses the controller archetype (like purging content and appointing community administrators).
 
 # Drawbacks
 
