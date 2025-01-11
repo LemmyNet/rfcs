@@ -23,50 +23,6 @@ You can view the spec by copy-pasting it into [Swagger Editor](https://editor.sw
 
 # Reference-level explanation
 
-## Rest vs RPC
-
-### Important Note
-
-Before the meat of this section, it must be stated that even though I am framing this as the existing (v3) API being RPC and the proposed (v4) API being REST, **the current API has some restful elements and the proposed API still has some RPC elements**. For the purposes of this RFC, REST and RPC are on the opposite ends of a spectrum, and this proposal moves the API to be closer to REST than it is to RPC.
-
-### What's an RPC API?
-
-Remote procedure call (RPC) APIs are APIs for running functions on a remote server. The various functions may use some HTTP semantics (e.g. GET for reads and POST for things that aren't reads, hierarchical URLs, query params, etc.), but most of the semantic heavy lifting is done by the application; that is to say, semantics are more specific to the individual application with functions for things like banning users, running CI stages, starting a scan — things that don't generalize to network applications more generally.
-
-### What's REST?
-
-REST APIs are web APIs that conform to REST architectural principles, which are ([copying from a redhat article](https://www.redhat.com/en/topics/api/what-is-a-rest-api)):
-
-- A client-server architecture made up of clients, servers, and resources, with requests managed through HTTP.
-- Stateless client-server communication, meaning no client information is stored between get requests and each request is separate and unconnected.
-- Cacheable data that streamlines client-server interactions.
-- A uniform interface between components so that information is transferred in a standard form. This requires that:
-  - resources requested are identifiable and separate from the representations sent to the client.
-  - resources can be manipulated by the client via the representation they receive because the representation contains enough information to do so.
-  - self-descriptive messages returned to the client have enough information to describe how the client should process it.
-  - hypertext/hypermedia is available, meaning that after accessing a resource the client should be able to use hyperlinks to find all other currently available actions they can take.
-- A layered system that organizes each type of server (those responsible for security, load-balancing, etc.) involved the retrieval of requested information into hierarchies, invisible to the client.
-- Code-on-demand (optional): the ability to send executable code from the server to the client when requested, extending client functionality.
-
-Some of these principles are more relevant to our use-case than others: for instance, it's already given that we're using a client-server architecture, and code-on-demand doesn't fit into our use-case at all.
-
-### How is Lemmy's API RPC-like?
-
-In both the [v3 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v3.rs) and current state of the [v4 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v4.rs) (as of January 2, 2025) operations that aren't creating, reading, and updating certain types of content all have URLs that correspond to actions instead of resources, e.g. locking a post, creating a report, and logging in. Further, unique resources are rarely identified by URL, typically being retrieved by passing a query parameter with a specific ID (e.g. GET /post?id=123).
-
-### Why RESTful?
-
-One major reason to make the API more RESTful is that Lemmy's domain lends itself well to being modeled as resources. Some resources in the domain are:
-
-- posts
-- comments
-- users
-- communities
-- federated instances
-- direct messages
-
-All of these resources act as nouns. By having the routes for endpoints focused on nouns (and, in some cases, adjectives), we can lean on HTTP verbs to show which action is being taken on a resource. We can also better describe errors by being more mindful of which HTTP status codes we return.
-
 ## Resource Archetypes
 
 An understanding of REST resource archetypes will help in understanding the design decisions made in this RFC. There are 4 archetypes of resources: document, collection, store, and controller. The following 4 subsections are lifted from [_REST API Design Rulebook_ by Mark Masse](https://github.com/Dhinendran/studymaterial/blob/master/Book%20-%20O%27Reilly%20REST%20API%20Design%20Rulebook.pdf).
@@ -166,14 +122,51 @@ Besides this, there are a few parts of the API that uses the controller archetyp
 
 # Drawbacks
 
-Why should we _not_ do this?
+This would be a very breaking change, potentially causing a lot of difficulty for consumers of the API. If the first stable version wasn't such an appropriate place to make breaking changes, I would not have made this proposal in the first place.
 
 # Rationale and alternatives
 
-- Why is this design the best in the space of possible designs?
-- What other designs have been considered and what is the rationale for not choosing them?
-- What is the impact of not doing this?
-- Could this change be implemented in an external project instead? How much complexity does it add?
+## Important Note
+
+Before the meat of this section, it must be stated that even though I am framing this as the existing (v3) API being RPC and the proposed (v4) API being REST, **the current API has some restful elements and the proposed API still has some RPC elements**. For the purposes of this RFC, REST and RPC are on the opposite ends of a spectrum, and this proposal moves the API to be closer to REST than it is to RPC.
+
+## What's an RPC API?
+
+Remote procedure call (RPC) APIs are APIs for running functions on a remote server. The various functions may use some HTTP semantics (e.g. GET for reads and POST for things that aren't reads, hierarchical URLs, query params, etc.), but most of the semantic heavy lifting is done by the application; that is to say, semantics are more specific to the individual application with functions for things like banning users, running CI stages, starting a scan — things that don't generalize to network applications more generally.
+
+## What's REST?
+
+REST APIs are web APIs that conform to REST architectural principles, which are ([copying from a redhat article](https://www.redhat.com/en/topics/api/what-is-a-rest-api)):
+
+- A client-server architecture made up of clients, servers, and resources, with requests managed through HTTP.
+- Stateless client-server communication, meaning no client information is stored between get requests and each request is separate and unconnected.
+- Cacheable data that streamlines client-server interactions.
+- A uniform interface between components so that information is transferred in a standard form. This requires that:
+  - resources requested are identifiable and separate from the representations sent to the client.
+  - resources can be manipulated by the client via the representation they receive because the representation contains enough information to do so.
+  - self-descriptive messages returned to the client have enough information to describe how the client should process it.
+  - hypertext/hypermedia is available, meaning that after accessing a resource the client should be able to use hyperlinks to find all other currently available actions they can take.
+- A layered system that organizes each type of server (those responsible for security, load-balancing, etc.) involved the retrieval of requested information into hierarchies, invisible to the client.
+- Code-on-demand (optional): the ability to send executable code from the server to the client when requested, extending client functionality.
+
+Some of these principles are more relevant to our use-case than others: for instance, it's already given that we're using a client-server architecture, and code-on-demand doesn't fit into our use-case at all.
+
+## How is Lemmy's API RPC-like?
+
+In both the [v3 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v3.rs) and current state of the [v4 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v4.rs) (as of January 2, 2025) operations that aren't creating, reading, and updating certain types of content all have URLs that correspond to actions instead of resources, e.g. locking a post, creating a report, and logging in. Further, unique resources are rarely identified by URL, typically being retrieved by passing a query parameter with a specific ID (e.g. GET /post?id=123).
+
+## Why RESTful?
+
+One major reason to make the API more RESTful is that Lemmy's domain lends itself well to being modeled as resources. Some resources in the domain are:
+
+- posts
+- comments
+- users
+- communities
+- federated instances
+- direct messages
+
+All of these resources act as nouns. By having the routes for endpoints focused on nouns (and, in some cases, adjectives), we can lean on HTTP verbs to show which action is being taken on a resource. We can also better describe errors by being more mindful of which HTTP status codes we return.
 
 # Prior art
 
