@@ -170,16 +170,22 @@ All of these resources act as nouns. By having the routes for endpoints focused 
 
 # Prior art
 
-Discuss prior art, both the good and the bad, in relation to this proposal.
-A few examples of what this can include are:
+In order to see how this compares to other social media platforms, I looked at the APIs of 3 different fediverse applications: Mastodon, Pleroma, and PeerTube.
 
-- Does this feature exist in other social media platforms and what experience have their community had?
-- Papers: Are there any published papers or great posts that discuss this? If you have some relevant papers to refer to, this can serve as a more detailed theoretical background.
+## Mastodon
+[Mastodon's REST API docs can be found here.](https://docs.joinmastodon.org/api/) You will need to scroll down far enough so that the "REST API" and "API METHODS" sections of the nav on the left show up to explore. It uses plural nouns similar to what this proposal does (e.g. `GET /statuses` to list statuses, `POST /statuses` to create a new status, `GET /status/{id}` to retrieve a specific status, `PUT /status/{id}` to update a specific status, and `DELETE /status/{id}` to delete a specific status). Mastodon also handles new user creation with  `POST /accounts` as opposed to a controller archetype endpoint named something like "register. Finally, images and videos are more broadly called "media" like in this proposal.
 
-This section is intended to encourage you as an author to think about the lessons from other social networks, provide readers of your RFC with a fuller picture.
-If there is no prior art, that is fine - your ideas are interesting to us whether they are brand new or if it is an adaptation from other languages.
+Unlike this proposal, Mastodon doesn't use the store archetype. For example, to favorite and unfavorite a status, instead of using something like `PUT /statuses/favorites/{statusId}` and `DELETE /statuses/favorites/{statusId}`, it uses `POST /statuses/{statusId}/favorite` and `POST /statuses/{statusId}/unfavorite`. They also don't have any single resource referring to the logged in user. To get the current user's profile, query `/profile`; to get the current user's settings, query `/preferences`; to block a user, post to `/accounts/{id}/block`. Compare these to `GET /me`, `GET /me/settings`, and `PUT /me/blocked/users/{personId}` from this proposal.
 
-Note that while precedent set by other social networks is some motivation, it does not on its own motivate an RFC.
+Curiously, status creation can included an `Idempotency-Key` header to prevent accidental duplicate posts. While not in the scope of this RFC, something similar could prove useful for Lemmy's API.
+
+## Pleroma
+[Pleroma's API docs can be found here.](https://api.pleroma.social/) Pleroma is similar to Mastodon in its use of plural nouns for collections, using ids to single out individual resources in collections, calling image attachments "media", and using many controller archetype resources but no store archetype resources.
+
+## PeerTube
+[PeerTube has an OpenAPI spec that can be viewed here.](https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/api/openapi.yaml) Similar to Mastodon and Pleroma, PeerTube uses plural nouns for collections of resources and ids as part of the path to identify specific resources. Unlike those 2 (but like this proposal) resources related to the current user are grouped under a resource specific to it (in this case `/uses/me`). It leans harder on controller archetype resources than the other 2 APIs being referenced. It does not use the term "media" for media content, however this is probably due to the fact that it specializes in video sharing.
+
+Strangely, there is both a `POST /users/register` endpoint and a `POST /users` endpoint for creating new users. It is not clear to me why that is the case.
 
 # Unresolved questions
 
