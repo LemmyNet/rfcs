@@ -87,6 +87,24 @@ paths:
           description: Default response
       tags:
         - Communities
+  "/communities/{communityId}/moderation-actions":
+    get:
+      summary: Get posts for a specific community.
+      description: ""
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Community from which to fetch moderation actions.
+      operationId: listModerationActionsFromCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Moderation
+        - Communities
   "/communities/{communityId}/posts":
     get:
       summary: Get posts for a specific community.
@@ -361,7 +379,7 @@ paths:
       tags:
         - Comments
         - Posts
-  "/post/{postId}/reports":
+  "/posts/{postId}/reports":
     get:
       summary: List all of the reports users made on a post.
       description: ""
@@ -911,7 +929,7 @@ paths:
         default:
           description: Default response
       tags:
-        - Administration
+        - Local Site
     put:
       summary: ""
       description: ""
@@ -921,6 +939,7 @@ paths:
         default:
           description: Default response
       tags:
+        - Local Site
         - Administration
   /site/taglines:
     get:
@@ -932,7 +951,7 @@ paths:
         default:
           description: Default response
       tags:
-        - Administration
+        - Local Site
     post:
       summary: ""
       description: ""
@@ -1393,7 +1412,7 @@ paths:
         - Posts
         - Moderation
         - Administration
-  "/post/suspended/{postId}/reinstate":
+  "/posts/suspended/{postId}/reinstate":
     post:
       summary: ""
       description: ""
@@ -1516,7 +1535,7 @@ paths:
       tags:
         - Posts
         - Moderation
-  "/post/{postId}/votes":
+  "/posts/{postId}/votes":
     get:
       summary: List who voted on a post and their respective votes.
       description: ""
@@ -1535,7 +1554,7 @@ paths:
         - Posts
         - Moderation
         - Voting
-  "/post/{postId}/votes/{personId}":
+  "/posts/{postId}/votes/{personId}":
     delete:
       summary: ""
       description: ""
@@ -1582,7 +1601,7 @@ paths:
       tags:
         - Posts
         - Voting
-  "/post/{postId}/reports/{personId}":
+  "/posts/{postId}/reports/{personId}":
     delete:
       summary: ""
       description: ""
@@ -2905,6 +2924,9 @@ paths:
       responses:
         default:
           description: Default response
+      tags:
+        - Posts
+        - Moderation
   "/posts/featured/{postId}":
     put:
       summary: ""
@@ -2920,6 +2942,9 @@ paths:
       responses:
         default:
           description: Default response
+      tags:
+        - Posts
+        - Moderation
     delete:
       summary: ""
       description: ""
@@ -2934,6 +2959,9 @@ paths:
       responses:
         default:
           description: Default response
+      tags:
+        - Posts
+        - Moderation
 security: []
 servers: []
 components:
@@ -2963,3 +2991,4 @@ tags:
   - name: Direct Messages
   - name: Auth
   - name: Counts
+  - name: Local Site
