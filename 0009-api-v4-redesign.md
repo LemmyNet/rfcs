@@ -1,6 +1,6 @@
 - Feature Name: API v4 Redesign
 - Start Date: 2024-1-12
-- RFC PR: [LemmyNet/rfcs#0000](https://github.com/LemmyNet/rfcs/pull/0000)
+- RFC PR: [LemmyNet/rfcs#0009](https://github.com/LemmyNet/rfcs/pull/0009)
 - Lemmy Issue: [LemmyNet/lemmy#4428](https://github.com/LemmyNet/lemmy/issues/4428)
 
 # Summary
