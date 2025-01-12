@@ -201,26 +201,12 @@ The OpenAPI spec provided with this only lists paths, methods, path parameters. 
 
 The second is especially important since the v3 (and current as of January 12, 2025 v4) API returns very large responses often with more data than what the client needs. I limited the proposal spec to just routes because the changes I propose are already quite large.
 
-Another thing that would be very good to have would be a way to generate an OpenAPI spec from Lemmy's source code. I've found 2 good libraries that can be used for generating an OpenAPI 3.0 spec: [`apistos`](https://crates.io/crates/apistos) and [`oasgen`](https://crates.io/crates/oasgen).
-
 One other potential change worth mentioning is adopting [hypertext as the engine of application state (HATEOAS)](https://restfulapi.net/hateoas/) for the API. I don't feel strongly about it myself, but since I framed this proposal as making the API more RESTful and HATEOAS is a component for designing RESTful APIs, it would be remiss of me not to mention it.
 
 Besides all of the above, the design of the routes presented in this proposal's spec should be discussed.
 
 # Future possibilities
 
-Think about what the natural extension and evolution of your proposal would
-be and how it would affect the language and project as a whole in a holistic
-way. Try to use this section as a tool to more fully consider all possible
-interactions with the project in your proposal.
+One thing that would be very good to have (but not in the scope of this RFC) would be a way to generate an OpenAPI spec from Lemmy's source code. I've found 2 good libraries that can be used for generating an OpenAPI 3.0 spec: [`apistos`](https://crates.io/crates/apistos) and [`oasgen`](https://crates.io/crates/oasgen).
 
-This is also a good place to "dump ideas", if they are out of scope for the
-RFC you are writing but otherwise related.
-
-If you have tried and cannot think of any future possibilities,
-you may simply state that you cannot think of anything.
-
-Note that having something written down in the future-possibilities section
-is not a reason to accept the current or a future RFC; such notes should be
-in the section on motivation or rationale in this or subsequent RFCs.
-The section merely provides additional information.
+Besides new things, I think taking a closer look at our API and the data it accepts and returns could help with future refactors if any are done. In particular, I think the current codebase lacks a separation of concerns between data used in the database and data returned by the API. The worst offenders in this regard are endpoints that return entire view objects, like [`get_post`](https://github.com/LemmyNet/lemmy/blob/11e05135923b7060df29e4525183314f653b6353/crates/api_crud/src/post/read.rs#L110-L115) which returns both a post view and a community view. A lack of separation of concerns is also visible in the route handler functions, which all handle not only parsing requests and sending responses, but much of the business logic and even some of the database handling logic (the last insofar as `&mut context.pool()` needs to be passed around everywhere).
