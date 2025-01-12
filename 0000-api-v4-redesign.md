@@ -1,7 +1,7 @@
 - Feature Name: API v4 Redesign
-- Start Date: 2024-12-30
+- Start Date: 2024-1-12
 - RFC PR: [LemmyNet/rfcs#0000](https://github.com/LemmyNet/rfcs/pull/0000)
-- Lemmy Issue: [LemmyNet/lemmy#0000](https://github.com/LemmyNet/lemmy/issues/0000)
+- Lemmy Issue: [LemmyNet/lemmy#4428](https://github.com/LemmyNet/lemmy/issues/4428)
 
 # Summary
 
@@ -153,7 +153,7 @@ Some of these principles are more relevant to our use-case than others: for inst
 
 ## How is Lemmy's API RPC-like?
 
-In both the [v3 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v3.rs) and current state of the [v4 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v4.rs) (as of January 2, 2025) operations that aren't creating, reading, and updating certain types of content all have URLs that correspond to actions instead of resources, e.g. locking a post, creating a report, and logging in. Further, unique resources are rarely identified by URL, typically being retrieved by passing a query parameter with a specific ID (e.g. GET /post?id=123).
+In both the [v3 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v3.rs) and current state of the [v4 API](https://github.com/LemmyNet/lemmy/blob/c0342292951c237ec5f575f2165758e4f0712e6f/src/api_routes_v4.rs) (as of January 12, 2025) operations that aren't creating, reading, and updating certain types of content all have URLs that correspond to actions instead of resources, e.g. locking a post, creating a report, and logging in. Further, unique resources are rarely identified by URL, typically being retrieved by passing a query parameter with a specific ID (e.g. GET /post?id=123).
 
 ## Why RESTful?
 
