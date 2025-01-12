@@ -173,25 +173,39 @@ All of these resources act as nouns. By having the routes for endpoints focused 
 In order to see how this compares to other social media platforms, I looked at the APIs of 3 different fediverse applications: Mastodon, Pleroma, and PeerTube.
 
 ## Mastodon
-[Mastodon's REST API docs can be found here.](https://docs.joinmastodon.org/api/) You will need to scroll down far enough so that the "REST API" and "API METHODS" sections of the nav on the left show up to explore. It uses plural nouns similar to what this proposal does (e.g. `GET /statuses` to list statuses, `POST /statuses` to create a new status, `GET /status/{id}` to retrieve a specific status, `PUT /status/{id}` to update a specific status, and `DELETE /status/{id}` to delete a specific status). Mastodon also handles new user creation with  `POST /accounts` as opposed to a controller archetype endpoint named something like "register. Finally, images and videos are more broadly called "media" like in this proposal.
+
+[Mastodon's REST API docs can be found here.](https://docs.joinmastodon.org/api/) You will need to scroll down far enough so that the "REST API" and "API METHODS" sections of the nav on the left show up to explore. It uses plural nouns similar to what this proposal does (e.g. `GET /statuses` to list statuses, `POST /statuses` to create a new status, `GET /status/{id}` to retrieve a specific status, `PUT /status/{id}` to update a specific status, and `DELETE /status/{id}` to delete a specific status). Mastodon also handles new user creation with `POST /accounts` as opposed to a controller archetype endpoint named something like "register. Finally, images and videos are more broadly called "media" like in this proposal.
 
 Unlike this proposal, Mastodon doesn't use the store archetype. For example, to favorite and unfavorite a status, instead of using something like `PUT /statuses/favorites/{statusId}` and `DELETE /statuses/favorites/{statusId}`, it uses `POST /statuses/{statusId}/favorite` and `POST /statuses/{statusId}/unfavorite`. They also don't have any single resource referring to the logged in user. To get the current user's profile, query `/profile`; to get the current user's settings, query `/preferences`; to block a user, post to `/accounts/{id}/block`. Compare these to `GET /me`, `GET /me/settings`, and `PUT /me/blocked/users/{personId}` from this proposal.
 
 Curiously, status creation can included an `Idempotency-Key` header to prevent accidental duplicate posts. While not in the scope of this RFC, something similar could prove useful for Lemmy's API.
 
 ## Pleroma
+
 [Pleroma's API docs can be found here.](https://api.pleroma.social/) Pleroma is similar to Mastodon in its use of plural nouns for collections, using ids to single out individual resources in collections, calling image attachments "media", and using many controller archetype resources but no store archetype resources.
 
 ## PeerTube
+
 [PeerTube has an OpenAPI spec that can be viewed here.](https://github.com/Chocobozzz/PeerTube/blob/develop/support/doc/api/openapi.yaml) Similar to Mastodon and Pleroma, PeerTube uses plural nouns for collections of resources and ids as part of the path to identify specific resources. Unlike those 2 (but like this proposal) resources related to the current user are grouped under a resource specific to it (in this case `/uses/me`). It leans harder on controller archetype resources than the other 2 APIs being referenced. It does not use the term "media" for media content, however this is probably due to the fact that it specializes in video sharing.
 
 Strangely, there is both a `POST /users/register` endpoint and a `POST /users` endpoint for creating new users. It is not clear to me why that is the case.
 
 # Unresolved questions
 
-- What parts of the design do you expect to resolve through the RFC process before this gets merged?
-- What parts of the design do you expect to resolve through the implementation of this feature before stabilization?
-- What related issues do you consider out of scope for this RFC that could be addressed in the future independently of the solution that comes out of this RFC?
+The OpenAPI spec provided with this only lists paths, methods, path parameters. There are still several aspects of the API that need to be hashed out:
+
+- Request schemas
+- Response schemas
+- Response codes
+- Query parameters (where appropriate)
+
+The second is especially important since the v3 (and current as of January 12, 2025 v4) API returns very large responses often with more data than what the client needs. I limited the proposal spec to just routes because the changes I propose are already quite large.
+
+Another thing that would be very good to have would be a way to generate an OpenAPI spec from Lemmy's source code. I've found 2 good libraries that can be used for generating an OpenAPI 3.0 spec: [`apistos`](https://crates.io/crates/apistos) and [`oasgen`](https://crates.io/crates/oasgen).
+
+One other potential change worth mentioning is adopting [hypertext as the engine of application state (HATEOAS)](https://restfulapi.net/hateoas/) for the API. I don't feel strongly about it myself, but since I framed this proposal as making the API more RESTful and HATEOAS is a component for designing RESTful APIs, it would be remiss of me not to mention it.
+
+Besides all of the above, the design of the routes presented in this proposal's spec should be discussed.
 
 # Future possibilities
 
