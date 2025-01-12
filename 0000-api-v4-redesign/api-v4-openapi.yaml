@@ -7,11 +7,11 @@ paths:
   /communities:
     get:
       summary: Get list of communities of an instance
-      description: ""
+      description: ''
       parameters: []
       operationId: listAllCommunities
       responses:
-        "200":
+        '200':
           description: Description
         default:
           description: Default response
@@ -19,7 +19,7 @@ paths:
         - Communities
     post:
       summary: Create a community
-      description: ""
+      description: ''
       parameters: []
       operationId: createCommunity
       responses:
@@ -30,7 +30,7 @@ paths:
   /communities/random:
     get:
       summary: Retrieve a random community.
-      description: ""
+      description: ''
       parameters: []
       operationId: getRandomCommunity
       responses:
@@ -38,10 +38,10 @@ paths:
           description: Default response
       tags:
         - Communities
-  "/communities/{communityId}":
+  '/communities/{communityId}':
     get:
       summary: Get information about a specific community.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -57,7 +57,7 @@ paths:
         - Communities
     delete:
       summary: Delete a given community.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -72,8 +72,8 @@ paths:
       tags:
         - Communities
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -87,10 +87,10 @@ paths:
           description: Default response
       tags:
         - Communities
-  "/communities/{communityId}/moderation-actions":
+  '/communities/{communityId}/moderation-actions':
     get:
       summary: Get posts for a specific community.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -105,10 +105,10 @@ paths:
       tags:
         - Moderation
         - Communities
-  "/communities/{communityId}/posts":
+  '/communities/{communityId}/posts':
     get:
       summary: Get posts for a specific community.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -125,7 +125,7 @@ paths:
         - Communities
     post:
       summary: Create a post.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -140,10 +140,10 @@ paths:
       tags:
         - Posts
         - Communities
-  "/communities/{communityId}/posts/featured":
+  '/communities/{communityId}/posts/featured':
     get:
       summary: List all of the posts that are featured for a given community.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -158,10 +158,10 @@ paths:
       tags:
         - Communities
         - Posts
-  "/communities/{communityId}/posts/featured/{postId}":
+  '/communities/{communityId}/posts/featured/{postId}':
     put:
       summary: Marks a given post as featured for a given community.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -187,7 +187,7 @@ paths:
         - Moderation
     delete:
       summary: Remove a given post from list of a given community's featured posts.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -211,10 +211,10 @@ paths:
         - Posts
         - Communities
         - Moderation
-  "/communities/{communityId}/moderators":
+  '/communities/{communityId}/moderators':
     get:
       summary: List the moderation team of the specified community.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -230,10 +230,10 @@ paths:
         - Moderation
         - Users
         - Communities
-  "/commmunities/{communityId}/users/{personId}/transfer-ownership":
+  '/commmunities/{communityId}/users/{personId}/transfer-ownership':
     post:
       summary: Make someone else the top mod of a given community.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -257,10 +257,10 @@ paths:
         - Communities
         - Users
         - Moderation
-  "/communities/{communityId}/users/{personId}/appoint-moderator":
+  '/communities/{communityId}/users/{personId}/appoint-moderator':
     post:
       summary: Add a user to a community's moderation team.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -287,7 +287,7 @@ paths:
   /posts:
     get:
       summary: List all posts.
-      description: ""
+      description: ''
       parameters: []
       operationId: listAllPosts
       responses:
@@ -295,10 +295,10 @@ paths:
           description: Default response
       tags:
         - Posts
-  "/posts/{postId}":
+  '/posts/{postId}':
     get:
       summary: Get a specific post.
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -314,7 +314,7 @@ paths:
         - Posts
     delete:
       summary: Delete a given post.
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -330,7 +330,7 @@ paths:
         - Posts
     put:
       summary: Update an already created post.
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -344,10 +344,10 @@ paths:
           description: Default response
       tags:
         - Posts
-  "/posts/{postId}/comments":
+  '/posts/{postId}/comments':
     get:
       summary: List comments for a given post
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -364,7 +364,7 @@ paths:
         - Posts
     post:
       summary: Create a top level comment on a post.
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -379,10 +379,10 @@ paths:
       tags:
         - Comments
         - Posts
-  "/posts/{postId}/reports":
+  '/posts/{postId}/reports':
     get:
       summary: List all of the reports users made on a post.
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -399,8 +399,8 @@ paths:
         - Moderation
   /me:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: getCurrentUser
       responses:
@@ -410,8 +410,8 @@ paths:
         - Current User
         - Users
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: deleteCurrentUserAccount
       responses:
@@ -423,7 +423,7 @@ paths:
   /me/sessions:
     post:
       summary: Creates a new session (i.e. logs in).
-      description: ""
+      description: ''
       parameters: []
       operationId: login
       responses:
@@ -434,7 +434,7 @@ paths:
         - Current User
     get:
       summary: List all sessions for the currently logged in user.
-      description: ""
+      description: ''
       parameters: []
       operationId: listSessions
       responses:
@@ -443,12 +443,12 @@ paths:
       tags:
         - Sessions
         - Current User
-  "/me/sessions/{sessionId}":
+  '/me/sessions/{sessionId}':
     delete:
       summary: >-
         Remove a session (possibly current session, possibly session on another
         device)
-      description: ""
+      description: ''
       parameters:
         - name: sessionId
           in: path
@@ -466,7 +466,7 @@ paths:
   /me/sessions/current:
     delete:
       summary: Delete current session.
-      description: ""
+      description: ''
       parameters: []
       operationId: logout
       responses:
@@ -477,7 +477,7 @@ paths:
         - Current User
     get:
       summary: Get the session information of the currently logged in user
-      description: ""
+      description: ''
       parameters: []
       operationId: getCurrentSession
       responses:
@@ -489,7 +489,7 @@ paths:
   /me/settings:
     get:
       summary: Get the settings for the account of the currently logged in user.
-      description: ""
+      description: ''
       parameters: []
       operationId: getAccountSettings
       responses:
@@ -500,7 +500,7 @@ paths:
         - Settings
     put:
       summary: Update the settings of the currently logged in user.
-      description: ""
+      description: ''
       parameters: []
       operationId: updateAccountSettings
       responses:
@@ -512,7 +512,7 @@ paths:
   /me/settings/backup:
     put:
       summary: Import settings from an account on another instance.
-      description: ""
+      description: ''
       parameters: []
       operationId: importAccountSettings
       responses:
@@ -525,7 +525,7 @@ paths:
       summary: >-
         Get the parts of the settings of the currently logged in user that can
         be backed up.
-      description: ""
+      description: ''
       parameters: []
       operationId: exportAccountSettings
       responses:
@@ -537,7 +537,7 @@ paths:
   /me/media:
     get:
       summary: Get media for the currently logged in user.
-      description: ""
+      description: ''
       parameters: []
       operationId: listCurrentUserMedia
       responses:
@@ -548,8 +548,8 @@ paths:
         - Media
   /me/mentions:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listCurrentUserMentions
       responses:
@@ -559,8 +559,8 @@ paths:
         - Current User
   /me/blocked/users:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listBlockedUsers
       responses:
@@ -570,10 +570,10 @@ paths:
         - Current User
         - Users
         - Blocks
-  "/me/blocked/users/{personId}":
+  '/me/blocked/users/{personId}':
     put:
       summary: Block a user
-      description: ""
+      description: ''
       parameters:
         - name: personId
           in: path
@@ -591,7 +591,7 @@ paths:
         - Blocks
     delete:
       summary: Remove user from blocklist
-      description: ""
+      description: ''
       parameters:
         - name: personId
           in: path
@@ -610,7 +610,7 @@ paths:
   /me/blocked/communities:
     get:
       summary: List communities blocked by the current user
-      description: ""
+      description: ''
       parameters: []
       operationId: listBlockedCommunities
       responses:
@@ -620,10 +620,10 @@ paths:
         - Current User
         - Communities
         - Blocks
-  "/me/blocked/communities/{communityId}":
+  '/me/blocked/communities/{communityId}':
     put:
       summary: Block community for current user.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -641,7 +641,7 @@ paths:
         - Blocks
     delete:
       summary: Stop blocking the community.
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -660,7 +660,7 @@ paths:
   /me/blocked/instances:
     get:
       summary: List instances blocked by the currently logged in user.
-      description: ""
+      description: ''
       parameters: []
       operationId: listBlockedInstances
       responses:
@@ -670,10 +670,10 @@ paths:
         - Current User
         - Instances
         - Blocks
-  "/me/blocked/instances/{instanceId}":
+  '/me/blocked/instances/{instanceId}':
     put:
       summary: Block an instance for the current user.
-      description: ""
+      description: ''
       parameters:
         - name: instanceId
           in: path
@@ -691,7 +691,7 @@ paths:
         - Blocks
     delete:
       summary: Stop blocking the instance for the current user.
-      description: ""
+      description: ''
       parameters:
         - name: instanceId
           in: path
@@ -710,7 +710,7 @@ paths:
   /me/saved/posts:
     get:
       summary: List the favorite posts of the logged in user.
-      description: ""
+      description: ''
       parameters: []
       operationId: listFavoritePosts
       responses:
@@ -720,10 +720,10 @@ paths:
         - Current User
         - Posts
         - Saved
-  "/me/saved/posts/{postId}":
+  '/me/saved/posts/{postId}':
     get:
       summary: Mark a post as a favorite for the current user.
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -741,7 +741,7 @@ paths:
         - Saved
     delete:
       summary: Unmark a post as favorite for the current user
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -760,7 +760,7 @@ paths:
   /me/saved/comments:
     get:
       summary: List comments favorited by the currently logged in user
-      description: ""
+      description: ''
       parameters: []
       operationId: listFavoriteComments
       responses:
@@ -770,10 +770,10 @@ paths:
         - Current User
         - Comments
         - Saved
-  "/me/saved/comments/{commentId}":
+  '/me/saved/comments/{commentId}':
     put:
       summary: Mark a comment as favorite for the current user.
-      description: ""
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -791,7 +791,7 @@ paths:
         - Saved
     delete:
       summary: Unmark a comment as favorite.
-      description: ""
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -810,7 +810,7 @@ paths:
   /me/saved:
     get:
       summary: List all favorites for currently logged in user.
-      description: ""
+      description: ''
       parameters: []
       operationId: listSaved
       responses:
@@ -822,7 +822,7 @@ paths:
   /me/hidden/posts:
     get:
       summary: List posts hidden by current user.
-      description: ""
+      description: ''
       parameters: []
       operationId: listHiddenPosts
       responses:
@@ -832,10 +832,10 @@ paths:
         - Current User
         - Hidden
         - Posts
-  "/me/hidden/posts/{postId}":
+  '/me/hidden/posts/{postId}':
     put:
       summary: Hide a post.
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -853,7 +853,7 @@ paths:
         - Posts
     delete:
       summary: Unhide post.
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -871,8 +871,8 @@ paths:
         - Posts
   /me/subscriptions/communities:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listSubscribedCommunities
       responses:
@@ -882,10 +882,10 @@ paths:
         - Current User
         - Communities
         - Subscriptions
-  "/me/subscriptions/communities/{communityId}":
+  '/me/subscriptions/communities/{communityId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -902,8 +902,8 @@ paths:
         - Communities
         - Subscriptions
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -921,8 +921,8 @@ paths:
         - Subscriptions
   /site:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: getSite
       responses:
@@ -931,8 +931,8 @@ paths:
       tags:
         - Local Site
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: updateOrInitializeSite
       responses:
@@ -943,8 +943,8 @@ paths:
         - Administration
   /site/taglines:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listTaglines
       responses:
@@ -953,8 +953,8 @@ paths:
       tags:
         - Local Site
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: createTagline
       responses:
@@ -964,8 +964,8 @@ paths:
         - Administration
   /site/taglines/random:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: getRandomTagline
       responses:
@@ -973,10 +973,10 @@ paths:
           description: Default response
       tags:
         - Administration
-  "/site/taglines/{taglineId}":
+  '/site/taglines/{taglineId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: taglineId
           in: path
@@ -991,8 +991,8 @@ paths:
       tags:
         - Administration
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: taglineId
           in: path
@@ -1008,8 +1008,8 @@ paths:
         - Administration
   /site/custom-emojis:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listCustomEmojis
       responses:
@@ -1018,8 +1018,8 @@ paths:
       tags:
         - Administration
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: createCustomEmoji
       responses:
@@ -1027,10 +1027,10 @@ paths:
           description: Default response
       tags:
         - Administration
-  "/site/custom-emojis/{emojiId}":
+  '/site/custom-emojis/{emojiId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: emojiId
           in: path
@@ -1045,8 +1045,8 @@ paths:
       tags:
         - Administration
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: emojiId
           in: path
@@ -1062,8 +1062,8 @@ paths:
         - Administration
   /site/oauth-providers:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listOAuthProviders
       responses:
@@ -1072,8 +1072,8 @@ paths:
       tags:
         - Administration
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: addOAuthProvider
       responses:
@@ -1081,10 +1081,10 @@ paths:
           description: Default response
       tags:
         - Administration
-  "/site/oauth-providers/{providerId}":
+  '/site/oauth-providers/{providerId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: providerId
           in: path
@@ -1099,8 +1099,8 @@ paths:
       tags:
         - Administration
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: providerId
           in: path
@@ -1114,10 +1114,10 @@ paths:
           description: Default response
       tags:
         - Administration
-  "/communities/{communityId}/bans":
+  '/communities/{communityId}/bans':
     get:
       summary: List users banned from a given community
-      description: ""
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -1134,8 +1134,8 @@ paths:
         - Users
         - Communities
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -1151,10 +1151,10 @@ paths:
         - Moderation
         - Users
         - Communities
-  "/communities/{communityId}/bans/{personId}/unban":
+  '/communities/{communityId}/bans/{personId}/unban':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -1178,8 +1178,8 @@ paths:
         - Communities
   /instances:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listFederatedInstances
       responses:
@@ -1189,8 +1189,8 @@ paths:
         - Instances
   /instances/allowed:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listAllowedInstances
       responses:
@@ -1198,10 +1198,10 @@ paths:
           description: Default response
       tags:
         - Instances
-  "/instances/allowed/{instanceId}":
+  '/instances/allowed/{instanceId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: instanceId
           in: path
@@ -1217,8 +1217,8 @@ paths:
         - Instances
         - Administration
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: instanceId
           in: path
@@ -1235,8 +1235,8 @@ paths:
         - Administration
   /instances/blocked:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listDefederatedInstances
       responses:
@@ -1244,10 +1244,10 @@ paths:
           description: Default response
       tags:
         - Instances
-  "/instances/blocked/{instanceId}":
+  '/instances/blocked/{instanceId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: instanceId
           in: path
@@ -1263,8 +1263,8 @@ paths:
         - Instances
         - Administration
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: instanceId
           in: path
@@ -1281,8 +1281,8 @@ paths:
         - Administration
   /communities/hidden:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listHiddenCommunities
       responses:
@@ -1292,10 +1292,10 @@ paths:
         - Communities
         - Administration
         - Hidden
-  "/communities/hidden/{communityId}":
+  '/communities/hidden/{communityId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -1313,8 +1313,8 @@ paths:
         - Hidden
   /communities/suspended:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listSuspendedCommunities
       responses:
@@ -1324,10 +1324,10 @@ paths:
         - Communities
         - Administration
         - Moderation
-  "/communities/suspended/{communityId}":
+  '/communities/suspended/{communityId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -1343,10 +1343,10 @@ paths:
         - Communities
         - Administration
         - Moderation
-  "/communities/suspended/{communityId}/reinstate":
+  '/communities/suspended/{communityId}/reinstate':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -1362,10 +1362,10 @@ paths:
         - Communities
         - Administration
         - Moderation
-  "/communities/hidden/{communityId}/unhide":
+  '/communities/hidden/{communityId}/unhide':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -1382,8 +1382,8 @@ paths:
         - Administration
   /posts/suspended:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listSuspendedPosts
       responses:
@@ -1393,10 +1393,10 @@ paths:
         - Posts
         - Moderation
         - Administration
-  "/posts/suspended/{postId}":
+  '/posts/suspended/{postId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1412,10 +1412,10 @@ paths:
         - Posts
         - Moderation
         - Administration
-  "/posts/suspended/{postId}/reinstate":
+  '/posts/suspended/{postId}/reinstate':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1433,8 +1433,8 @@ paths:
         - Administration
   /me/read/posts:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listReadPosts
       responses:
@@ -1444,8 +1444,8 @@ paths:
         - Posts
         - Current User
     patch:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: markMultiplePostsAsRead
       responses:
@@ -1454,10 +1454,10 @@ paths:
       tags:
         - Posts
         - Current User
-  "/me/read/posts/{postId}":
+  '/me/read/posts/{postId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1473,8 +1473,8 @@ paths:
         - Posts
         - Current User
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1491,8 +1491,8 @@ paths:
         - Current User
   /posts/locked:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listLockedPosts
       responses:
@@ -1500,10 +1500,10 @@ paths:
           description: Default response
       tags:
         - Posts
-  "/posts/locked/{postId}":
+  '/posts/locked/{postId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1519,8 +1519,8 @@ paths:
         - Posts
         - Moderation
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1535,10 +1535,10 @@ paths:
       tags:
         - Posts
         - Moderation
-  "/posts/{postId}/votes":
+  '/posts/{postId}/votes':
     get:
       summary: List who voted on a post and their respective votes.
-      description: ""
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1554,10 +1554,10 @@ paths:
         - Posts
         - Moderation
         - Voting
-  "/posts/{postId}/votes/{personId}":
+  '/posts/{postId}/votes/{personId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1579,8 +1579,8 @@ paths:
         - Posts
         - Voting
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1601,10 +1601,10 @@ paths:
       tags:
         - Posts
         - Voting
-  "/posts/{postId}/reports/{personId}":
+  '/posts/{postId}/reports/{personId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1626,8 +1626,8 @@ paths:
         - Posts
         - Moderation
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -1650,8 +1650,8 @@ paths:
         - Moderation
   /metadata:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: getUrlMetadata
       responses:
@@ -1661,8 +1661,8 @@ paths:
         - Posts
   /comments:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listComments
       responses:
@@ -1670,10 +1670,10 @@ paths:
           description: Default response
       tags:
         - Comments
-  "/comments/{commentId}":
+  '/comments/{commentId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1688,8 +1688,8 @@ paths:
       tags:
         - Comments
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1705,8 +1705,8 @@ paths:
         - Comments
   /comments/suspended:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listSuspendedComments
       responses:
@@ -1715,10 +1715,10 @@ paths:
       tags:
         - Comments
         - Moderation
-  "/comments/suspended/{commentId}":
+  '/comments/suspended/{commentId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1733,10 +1733,10 @@ paths:
       tags:
         - Comments
         - Moderation
-  "/comments/suspended/{commentId}/reinstate":
+  '/comments/suspended/{commentId}/reinstate':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1751,10 +1751,10 @@ paths:
       tags:
         - Comments
         - Moderation
-  "/me/read/comments/{commentId}":
+  '/me/read/comments/{commentId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1770,8 +1770,8 @@ paths:
         - Current User
         - Comments
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1786,10 +1786,10 @@ paths:
       tags:
         - Current User
         - Comments
-  "/comments/pinned/{commentId}":
+  '/comments/pinned/{commentId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1805,8 +1805,8 @@ paths:
         - Comments
         - Moderation
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1821,10 +1821,10 @@ paths:
       tags:
         - Comments
         - Moderation
-  "/comments/{commentId}/votes":
+  '/comments/{commentId}/votes':
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1840,10 +1840,10 @@ paths:
         - Moderation
         - Comments
         - Voting
-  "/comments/{commentId}/votes/{personId}":
+  '/comments/{commentId}/votes/{personId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1865,8 +1865,8 @@ paths:
         - Comments
         - Voting
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1887,10 +1887,10 @@ paths:
       tags:
         - Comments
         - Voting
-  "/comments/{commentId}/reports":
+  '/comments/{commentId}/reports':
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1905,10 +1905,10 @@ paths:
       tags:
         - Comments
         - Moderation
-  "/comments/{commentId}/reports/{personId}":
+  '/comments/{commentId}/reports/{personId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1930,8 +1930,8 @@ paths:
         - Comments
         - Moderation
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1952,10 +1952,10 @@ paths:
       tags:
         - Comments
         - Moderation
-  "/comments/{commentId}/replies":
+  '/comments/{commentId}/replies':
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1970,8 +1970,8 @@ paths:
       tags:
         - Comments
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -1987,8 +1987,8 @@ paths:
         - Comments
   /direct-messages:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listDirectMessages
       responses:
@@ -1998,8 +1998,8 @@ paths:
         - Direct Messages
   /users:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listUsers
       responses:
@@ -2008,8 +2008,8 @@ paths:
       tags:
         - Users
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: registerUser
       responses:
@@ -2017,10 +2017,10 @@ paths:
           description: Default response
       tags:
         - Users
-  "/users/{personId}":
+  '/users/{personId}':
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: personId
           in: path
@@ -2034,10 +2034,10 @@ paths:
           description: Default response
       tags:
         - Users
-  "/users/{personId}/direct-messages":
+  '/users/{personId}/direct-messages':
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: personId
           in: path
@@ -2053,8 +2053,8 @@ paths:
         - Users
         - Direct Messages
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: personId
           in: path
@@ -2069,10 +2069,10 @@ paths:
       tags:
         - Users
         - Direct Messages
-  "/direct-messages/{messageId}":
+  '/direct-messages/{messageId}':
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: messageId
           in: path
@@ -2087,8 +2087,8 @@ paths:
       tags:
         - Direct Messages
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: messageId
           in: path
@@ -2103,8 +2103,8 @@ paths:
       tags:
         - Direct Messages
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: messageId
           in: path
@@ -2120,8 +2120,8 @@ paths:
         - Direct Messages
   /me/read/direct-messages:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listReadDirectMessages
       responses:
@@ -2130,10 +2130,10 @@ paths:
       tags:
         - Current User
         - Direct Messages
-  "/me/read/direct-messages/{messageId}":
+  '/me/read/direct-messages/{messageId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: messageId
           in: path
@@ -2149,8 +2149,8 @@ paths:
         - Current User
         - Direct Messages
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: messageId
           in: path
@@ -2167,8 +2167,8 @@ paths:
         - Direct Messages
   /direct-messages/suspended:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listSuspendedDirectMessages
       responses:
@@ -2177,10 +2177,10 @@ paths:
       tags:
         - Direct Messages
         - Moderation
-  "/direct-messages/{messageId}/reports":
+  '/direct-messages/{messageId}/reports':
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: messageId
           in: path
@@ -2195,10 +2195,10 @@ paths:
       tags:
         - Direct Messages
         - Moderation
-  "/direct-messages/{messageId}/reports/{personId}":
+  '/direct-messages/{messageId}/reports/{personId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: messageId
           in: path
@@ -2220,8 +2220,8 @@ paths:
         - Direct Messages
         - Moderation
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: messageId
           in: path
@@ -2244,8 +2244,8 @@ paths:
         - Moderation
   /reports:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listReports
       responses:
@@ -2255,8 +2255,8 @@ paths:
         - Moderation
   /me/password:
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: changePassword
       responses:
@@ -2266,8 +2266,8 @@ paths:
         - Current User
   /me/password/send-reset-email:
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: sendPasswordResetEmail
       responses:
@@ -2277,8 +2277,8 @@ paths:
         - Current User
   /me/password/reset:
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: resetPassword
       responses:
@@ -2288,8 +2288,8 @@ paths:
         - Current User
   /captcha:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: getCaptcha
       responses:
@@ -2299,8 +2299,8 @@ paths:
         - Auth
   /one-time-password:
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: enableTotp
       responses:
@@ -2309,8 +2309,8 @@ paths:
       tags:
         - Auth
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: disableTotp
       responses:
@@ -2320,8 +2320,8 @@ paths:
         - Auth
   /one-time-password/new:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: generateTotpSecret
       responses:
@@ -2331,8 +2331,8 @@ paths:
         - Auth
   /email/verify:
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: verifyEmail
       responses:
@@ -2342,8 +2342,8 @@ paths:
         - Auth
   /me/read/comments:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listReadComments
       responses:
@@ -2354,8 +2354,8 @@ paths:
         - Current User
   /me/replies:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listCurrentUserReplies
       responses:
@@ -2365,8 +2365,8 @@ paths:
         - Current User
   /me/mentions/read:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listReadMentions
       responses:
@@ -2375,8 +2375,8 @@ paths:
       tags:
         - Current User
     patch:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: markMultipleMentionsAsRead
       responses:
@@ -2384,10 +2384,10 @@ paths:
           description: Default response
       tags:
         - Current User
-  "/me/mentions/read/{mentionId}":
+  '/me/mentions/read/{mentionId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: mentionId
           in: path
@@ -2402,8 +2402,8 @@ paths:
       tags:
         - Current User
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: mentionId
           in: path
@@ -2419,8 +2419,8 @@ paths:
         - Current User
   /reports/unresolved:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listUnresolvedReports
       responses:
@@ -2430,8 +2430,8 @@ paths:
         - Moderation
   /reports/unresolved/count:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: getNumberOfUnresolvedReports
       responses:
@@ -2442,8 +2442,8 @@ paths:
         - Counts
   /me/notifications:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listNotifications
       responses:
@@ -2453,8 +2453,8 @@ paths:
         - Current User
   /me/notifications/unread:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listUnreadNotifications
       responses:
@@ -2464,8 +2464,8 @@ paths:
         - Current User
   /me/notifications/unread/count:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: getNumberOfUnreadNotifications
       responses:
@@ -2474,10 +2474,10 @@ paths:
       tags:
         - Current User
         - Counts
-  "/site/admins/{personId}":
+  '/site/admins/{personId}':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: personId
           in: path
@@ -2492,8 +2492,8 @@ paths:
       tags:
         - Administration
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: personId
           in: path
@@ -2509,8 +2509,8 @@ paths:
         - Administration
   /site/registration-applications:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listRegistrationApplications
       responses:
@@ -2520,8 +2520,8 @@ paths:
         - Administration
   /site/registration-applications/count:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: getNumberOfRegistrationApplications
       responses:
@@ -2530,10 +2530,10 @@ paths:
       tags:
         - Administration
         - Counts
-  "/site/registration-applications/{applicationId}/approve":
+  '/site/registration-applications/{applicationId}/approve':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: applicationId
           in: path
@@ -2547,10 +2547,10 @@ paths:
           description: Default response
       tags:
         - Administration
-  "/site/registration-applications/{applicationId}/deny":
+  '/site/registration-applications/{applicationId}/deny':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: applicationId
           in: path
@@ -2564,10 +2564,10 @@ paths:
           description: Default response
       tags:
         - Administration
-  "/posts/{postId}/purge":
+  '/posts/{postId}/purge':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -2583,10 +2583,10 @@ paths:
         - Posts
         - Administration
         - Moderation
-  "/comments/{commentId}/purge":
+  '/comments/{commentId}/purge':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: commentId
           in: path
@@ -2602,10 +2602,10 @@ paths:
         - Comments
         - Administration
         - Moderation
-  "/communities/{communityId}/purge":
+  '/communities/{communityId}/purge':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -2621,10 +2621,10 @@ paths:
         - Communities
         - Administration
         - Moderation
-  "/users/{userId}/purge":
+  '/users/{userId}/purge':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: userId
           in: path
@@ -2642,8 +2642,8 @@ paths:
         - Moderation
   /site/users/banned:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listBannedUsers
       responses:
@@ -2653,10 +2653,10 @@ paths:
         - Users
         - Moderation
         - Administration
-  "/site/users/banned/{personId}":
+  '/site/users/banned/{personId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: personId
           in: path
@@ -2672,10 +2672,10 @@ paths:
         - Users
         - Moderation
         - Administration
-  "/site/users/banned/{personId}/unban":
+  '/site/users/banned/{personId}/unban':
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: personId
           in: path
@@ -2693,8 +2693,8 @@ paths:
         - Moderation
   /site/admins/me:
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: leaveAdminTeam
       responses:
@@ -2704,8 +2704,8 @@ paths:
         - Administration
   /oauth/authenticate:
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: authenticateWithOAuth
       responses:
@@ -2715,8 +2715,8 @@ paths:
         - Auth
   /site/icon:
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: setSiteIcon
       responses:
@@ -2725,8 +2725,8 @@ paths:
       tags:
         - Administration
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: deleteSiteIcon
       responses:
@@ -2736,8 +2736,8 @@ paths:
         - Administration
   /site/banner:
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: setSiteBanner
       responses:
@@ -2746,8 +2746,8 @@ paths:
       tags:
         - Administration
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: deleteSiteBanner
       responses:
@@ -2755,10 +2755,10 @@ paths:
           description: Default response
       tags:
         - Administration
-  "/communities/{communityId}/icon":
+  '/communities/{communityId}/icon':
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -2774,8 +2774,8 @@ paths:
         - Communities
         - Moderation
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: communityId
           in: path
@@ -2792,8 +2792,8 @@ paths:
         - Moderation
   /me/avatar:
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: deleteCurrentUserAvatar
       responses:
@@ -2803,8 +2803,8 @@ paths:
         - Current User
         - Media
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: setCurrentUserAvatar
       responses:
@@ -2815,8 +2815,8 @@ paths:
         - Media
   /media:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listSiteMedia
       responses:
@@ -2826,8 +2826,8 @@ paths:
         - Media
         - Administration
     post:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: uploadMedia
       responses:
@@ -2837,8 +2837,8 @@ paths:
         - Media
   /media/proxy:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: getProxiedMedia
       responses:
@@ -2846,10 +2846,10 @@ paths:
           description: Default response
       tags:
         - Media
-  "/media/{filename}":
+  '/media/{filename}':
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: filename
           in: path
@@ -2864,8 +2864,8 @@ paths:
       tags:
         - Media
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: filename
           in: path
@@ -2881,8 +2881,8 @@ paths:
         - Media
   /media/health:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: getMediaServerHealth
       responses:
@@ -2892,8 +2892,8 @@ paths:
         - Media
   /moderation-actions:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listModerationActions
       responses:
@@ -2903,8 +2903,8 @@ paths:
         - Moderation
   /search:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: search
       responses:
@@ -2917,8 +2917,8 @@ paths:
         - Communities
   /posts/featured:
     get:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters: []
       operationId: listFeaturedPosts
       responses:
@@ -2927,10 +2927,10 @@ paths:
       tags:
         - Posts
         - Moderation
-  "/posts/featured/{postId}":
+  '/posts/featured/{postId}':
     put:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -2946,8 +2946,8 @@ paths:
         - Posts
         - Moderation
     delete:
-      summary: ""
-      description: ""
+      summary: ''
+      description: ''
       parameters:
         - name: postId
           in: path
@@ -2961,6 +2961,104 @@ paths:
           description: Default response
       tags:
         - Posts
+        - Moderation
+  /communities/lookup:
+    get:
+      summary: >-
+        Lookup a community, federating with the community if it's on a remote
+        instance.
+      description: ''
+      parameters: []
+      operationId: lookupCommunity
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Instances
+        - Communities
+  '/communities/{communityId}/pending-follows':
+    get:
+      summary: List pending follows for a given community.
+      description: ''
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to fetch the pending follows of.
+      operationId: listPendingFollows
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Moderation
+  '/communities/{communityId}/pending-follows/count':
+    get:
+      summary: Get number of pending follows for a given community.
+      description: ''
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to fetch the number of pending follows for.
+      operationId: numberOfPendingFollows
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Moderation
+  '/communities/{communityId}/pending-follows/{personId}/approve':
+    post:
+      summary: Approve a pending follow for a community.
+      description: ''
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to approve the pending follow for.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person requesting to follow a community.
+      operationId: approvePendingFollow
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
+        - Moderation
+  '/communities/{communityId}/pending-follows/{personId}/reject':
+    post:
+      summary: Reject a pending follow for a community.
+      description: ''
+      parameters:
+        - name: communityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the community to reject the follow request for.
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the person attempting to follow a community.
+      operationId: rejectPendingFollow
+      responses:
+        default:
+          description: Default response
+      tags:
+        - Communities
         - Moderation
 security: []
 servers: []
