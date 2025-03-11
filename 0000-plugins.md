@@ -1,7 +1,7 @@
 - Feature Name: plugins
 - Start Date: 2024-12-02
-- RFC PR: [LemmyNet/rfcs#0000](https://github.com/LemmyNet/rfcs/pull/0008)
-- Lemmy Issue: [LemmyNet/lemmy#0000](https://github.com/LemmyNet/lemmy/issues/3562)
+- RFC PR: [LemmyNet/rfcs#0008](https://github.com/LemmyNet/rfcs/pull/0008)
+- Lemmy Issue: [LemmyNet/lemmy#3562](https://github.com/LemmyNet/lemmy/issues/3562)
 
 # Summary
 
