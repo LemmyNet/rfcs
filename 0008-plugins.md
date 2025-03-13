@@ -25,9 +25,9 @@ Each plugin consists of two files, a [manifest](https://extism.org/docs/concepts
 
 ```json
 {
-    name: "My Plugin",
-    url: "http://example.com/plugin-info",
-    description: "Plugin which does the thing"
+    "name": "My Plugin",
+    "url": "http://example.com/plugin-info",
+    "description": "Plugin which does the thing"
 }
 ```
 
