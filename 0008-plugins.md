@@ -21,7 +21,15 @@ Plugins will make Lemmy more flexible, and allow implementing features which are
 
 ## File Structure
 
-Each plugin consists of two files, `my_plugin.wasm` for the code and `my_plugin.json` for metadata. The metadata consists of `url` (repository or website link), `name` and `short description`. Plugins are loaded from `./plugins/` at startup. The names and metadata for all active plugins are exposed under `/api/v4/site` with a new field `active_plugins`.
+Each plugin consists of two files, a [manifest](https://extism.org/docs/concepts/manifest) and the actual wasm binary. The manifest specifies how to load the binary, and provides various configuration options. Plugins are loaded at startup from `./plugins/` or `LEMMY_PLUGIN_PATH`. Each plugin must have a `metadata` hook returning data in the format below, which is listed in a new field `active_plugins` under `/api/v4/site`.
+
+```json
+{
+    name: "My Plugin",
+    url: "http://example.com/plugin-info",
+    description: "Plugin which does the thing"
+}
+```
 
 ## Plugin Hooks
 
