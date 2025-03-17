@@ -55,7 +55,10 @@ These hooks can be used to reject or alter user actions based on different crite
   - [update_local_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L84)
   - [receive_federated_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L59)
   - [post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L119)
-
+- Private Message
+  - [create_local_private_message](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/private_message.rs#L42)
+  - [update_local_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/private_message.rs#L60)
+  - [receive_federated_private_message](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/private_message.rs#L42)
 ### After writing to Database
 
 These are mainly useful to generate notifications.
@@ -66,6 +69,8 @@ These are mainly useful to generate notifications.
 - Comment
   - [new_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L27)
   - [new_comment_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L105)
+- Private Message
+  - [new_private_message](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/private_message.rs#L25)
 
 ## Example
 
