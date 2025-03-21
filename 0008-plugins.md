@@ -72,6 +72,10 @@ These are mainly useful to generate notifications.
 - Private Message
   - [new_private_message](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/private_message.rs#L25)
 
+## Access to Lemmy API
+
+Plugins can use the config value `lemmy_url` which contains a value like `http://0.0.0.0:8541/` in order to call the Lemmy API.
+
 ## Example
 
 Below is a simple Go plugin which uses the `create_local_post` hook to replace `Rust` in post body with `Go`, and reject posts which mention `Java`.
