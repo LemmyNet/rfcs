@@ -24,14 +24,13 @@ The `CommunityVisibility` enum used in `community.visibility` gets a new variant
 ## API
 
 When a new follow request for a local private community is made, it needs to set `pending = true`. Moderators can review and approve/reject pending follows with the following endpoints:
-
 - `GET /api/v3/community/pending_follows/count`
 - `GET /api/v3/community/pending_follows/list`
 - `POST /api/v3/community/pending_follows/approve`
 
 The follow_request list for each item should contain a boolean value `is_new_instance`. This value should be true if the community has no followers from the user's instance yet, and allows showing a warning when content will be federated to a new server.
 
-Once the approve endpoint is called, the follow request can be deleted. If the request was approved, write the follow relation to `community_follower`. If it was rejected, we could notify the user about this (optional).
+Once the approve endpoint is called, the follow request can be deleted. If the request was approved, write the follow relation to `community_follower`. If it was rejected, we could notify the user about this (optional). 
 
 Users who don't follow the private community need to be prevented from posting or making other actions in it. This can be done by adding a check in [check_community_user_action()](https://github.com/LemmyNet/lemmy/blob/main/crates/api_common/src/utils.rs#L171).
 
