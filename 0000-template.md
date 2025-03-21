@@ -16,7 +16,7 @@ Why are we doing this? What use cases does it support? What is the expected outc
 Explain the proposal as if it was already included in Lemmy and you were teaching it to another user. That generally means:
 
 - Explaining the feature largely in terms of examples.
-- Explaining how Lemmy users should *think* about the feature, and how it should impact the way they use Lemmy. It should explain the impact as concretely as possible.
+- Explaining how Lemmy users should _think_ about the feature, and how it should impact the way they use Lemmy. It should explain the impact as concretely as possible.
 - For policy RFCs, this section should provide an example-driven introduction to the policy, and explain its impact in concrete terms.
 
 # Reference-level explanation
@@ -37,7 +37,7 @@ In particular explain the following, if applicable:
 
 # Drawbacks
 
-Why should we *not* do this?
+Why should we _not_ do this?
 
 # Rationale and alternatives
 

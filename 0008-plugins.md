@@ -25,9 +25,9 @@ Each plugin consists of two files, a [manifest](https://extism.org/docs/concepts
 
 ```json
 {
-    "name": "My Plugin",
-    "url": "http://example.com/plugin-info",
-    "description": "Plugin which does the thing"
+  "name": "My Plugin",
+  "url": "http://example.com/plugin-info",
+  "description": "Plugin which does the thing"
 }
 ```
 
@@ -37,7 +37,7 @@ Lemmy will have hooks for specific actions which can then be used by plugins. In
 
 Whenever a plugin hook is called, Lemmy blocks the API call until the plugin returns. This means that slow plugins can result in slow API actions for users, or delays for incoming federation. To avoid such problems, plugin developers should optimize their code to return as fast as possible, and perform expensive operations or network calls in a background thread.
 
-Data is passed to plugins using the existing structs linked below, serialized to JSON. Additionally plugins can retrieve [config values](https://github.com/extism/go-pdk?tab=readme-ov-file#configs) `lemmy_version` (e.g. `0.19.8`) and `lemmy_url` (e.g. `http://localhost:8536`), in order to retrieve data or perform further actions via Lemmy API.
+Data is passed to plugins using the existing structs linked below, serialized to JSON. Additionally plugins can retrieve [config values](https://github.com/extism/go-pdk?tab=readme-ov-file#configs) `lemmy_version` (e.g. `0.19.8`) and `lemmy_url` (e.g. `http://localhost:8536/`), in order to retrieve data or perform further actions via Lemmy API.
 
 For the initial implementation, the following hooks will be available:
 
@@ -46,35 +46,40 @@ For the initial implementation, the following hooks will be available:
 These hooks can be used to reject or alter user actions based on different criteria.
 
 - Post
-  - [create_local_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L67)
-  - [update_local_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L98)
-  - [receive_federated_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L67)
-  - [post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L171)
+  - `before_create_local_post` (with [PostInsertForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L101))
+  - `before_update_local_post` (with [PostUpdateForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L150))
+  - `before_receive_federated_post` (with [PostInsertForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L101))
 - Comment
-  - [create_local_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L59)
-  - [update_local_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L84)
-  - [receive_federated_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L59)
-  - [post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L119)
+  - `before_create_local_comment` (with [CommentInsertForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L68))
+  - `before_update_local_comment` (with [CommentUpdateForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L93))
+  - `before_receive_federated_comment` (with [CommentInsertForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L68))
+- Votes
+  - `before_post_vote` (with [PostLikeForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L215))
+  - `before_comment_vote` (with [CommentLikeForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L133))
 - Private Message
-  - [create_local_private_message](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/private_message.rs#L42)
-  - [update_local_post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/private_message.rs#L60)
-  - [receive_federated_private_message](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/private_message.rs#L42)
+  - `before_create_local_private_message` (with [PrivateMessageInsertForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L116))
+  - `before_update_local_private_message` (with [PrivateMessageUpdateForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/private_message.rs#L63))
+  - `before_receive_federated_private_message` (with [PrivateMessageInsertForm](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L116))
+
 ### After writing to Database
 
 These are mainly useful to generate notifications.
 
-- Post
-  - [new_post](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L19)
-  - [new_post_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L157)
-- Comment
-  - [new_comment](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L27)
-  - [new_comment_vote](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L105)
-- Private Message
-  - [new_private_message](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/private_message.rs#L25)
-
-## Access to Lemmy API
-
-Plugins can use the config value `lemmy_url` which contains a value like `http://0.0.0.0:8541/` in order to call the Lemmy API.
+- Post (all with [Post](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/post.rs#L18))
+  - `after_create_local_post`
+  - `after_update_local_post`
+  - `after_receive_federated_comment`
+- Comment (all with [Comment](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/comment.rs#L26))
+  - `after_create_local_comment`
+  - `after_update_local_comment`
+  - `after_receive_federated_post`
+- Votes
+  - `after_post_vote` (with [PostActions](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/post.rs#L185))
+  - `after_comment_vote` (with [CommentActions](https://github.com/LemmyNet/lemmy/blob/main/crates/db_schema/src/source/comment.rs#L116))
+- Private Message (all with [PrivateMessage](https://github.com/LemmyNet/lemmy/blob/0.19.7/crates/db_schema/src/source/private_message.rs#L25))
+  - `after_create_local_private_message`
+  - `after_update_local_private_message`
+  - `after_receive_federated_private_message`
 
 ## Example
 
