@@ -83,7 +83,7 @@ These are mainly useful to generate notifications.
 
 ## Example
 
-Below is a simple Go plugin which uses the `create_local_post` hook to replace `Rust` in post body with `Go`, and reject posts which mention `Java`.
+Below is a simple Go plugin which uses the `before_create_local_post` hook to replace `Rust` in post body with `Go`, and reject posts which mention `Java`.
 
 Also checkout the documentation for Extism's [Go Plugin Development Kit](https://github.com/extism/go-pdk).
 
@@ -119,7 +119,7 @@ func metadata() int32 {
 }
 
 // This hook gets called when a local user creates a new post
-//go:wasmexport create_local_post
+//go:wasmexport before_create_local_post
 func create_local_post() int32 {
 	// Load user parameters into a map, to make sure we return all the same fields later
 	// and dont drop anything
